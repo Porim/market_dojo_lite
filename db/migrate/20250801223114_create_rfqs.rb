@@ -1,0 +1,13 @@
+class CreateRfqs < ActiveRecord::Migration[8.0]
+  def change
+    create_table :rfqs do |t|
+      t.string :title
+      t.text :description
+      t.string :status
+      t.datetime :deadline
+      t.references :user, null: false, foreign_key: true
+
+      t.timestamps
+    end
+  end
+end

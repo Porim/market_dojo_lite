@@ -1,0 +1,40 @@
+<div class="space-y-6">
+  <h1 class="text-3xl font-bold text-gray-900">All Auctions</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @auctions.each do |auction| %>
+      <div class="bg-white shadow rounded-lg p-6">
+        <h3 class="text-lg font-semibold mb-2">
+          <%= link_to auction.rfq.title, rfq_auction_path(auction.rfq), class: "hover:text-blue-600" %>
+        </h3>
+        
+        <div class="space-y-2 text-sm text-gray-600">
+          <p>By: <%= auction.rfq.user.company_name %></p>
+          <p>Current Price: <span class="font-bold text-green-600">£<%= auction.current_price || "N/A" %></span></p>
+          <p>Bids: <%= auction.bids.count %></p>
+          
+          <% if auction.active? %>
+            <p class="text-green-600">
+              Ends in: <%= distance_of_time_in_words(Time.current, auction.end_time) %>
+            </p>
+          <% else %>
+            <p class="text-red-600">
+              Status: <%= auction.status.capitalize %>
+            </p>
+          <% end %>
+        </div>
+
+        <div class="mt-4">
+          <%= link_to "View Auction", rfq_auction_path(auction.rfq), 
+              class: "block text-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @auctions.empty? %>
+    <div class="text-center py-12 bg-white rounded-lg shadow">
+      <p class="text-gray-500 text-lg">No auctions available at the moment.</p>
+    </div>
+  <% end %>
+</div>
