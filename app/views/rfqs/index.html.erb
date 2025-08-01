@@ -1,0 +1,66 @@
+<div class="space-y-6">
+  <div class="flex justify-between items-center">
+    <h1 class="text-3xl font-bold text-gray-900">RFQs</h1>
+    <% if current_user.buyer? %>
+      <%= link_to "Create New RFQ", new_rfq_path, class: "bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" %>
+    <% end %>
+  </div>
+
+  <div class="bg-white shadow rounded-lg">
+    <% if @rfqs.any? %>
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deadline</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quotes</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @rfqs.each do |rfq| %>
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <%= link_to rfq.title, rfq, class: "text-blue-600 hover:text-blue-900" %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <%= rfq.user.company_name %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                  <%= rfq.status == 'published' ? 'bg-green-100 text-green-800' : 
+                     rfq.status == 'closed' ? 'bg-red-100 text-red-800' : 
+                     'bg-gray-100 text-gray-800' %>">
+                  <%= rfq.status.capitalize %>
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <%= rfq.deadline.strftime("%B %d, %Y") %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <%= rfq.quotes.count %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <%= link_to "View", rfq, class: "text-blue-600 hover:text-blue-900 mr-3" %>
+                <% if current_user.buyer? && rfq.user == current_user %>
+                  <%= link_to "Edit", edit_rfq_path(rfq), class: "text-indigo-600 hover:text-indigo-900" %>
+                <% elsif current_user.supplier? && rfq.status == 'published' && rfq.quotes.where(user: current_user).none? %>
+                  <%= link_to "Submit Quote", new_rfq_quote_path(rfq), class: "text-green-600 hover:text-green-900" %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <div class="text-center py-12">
+        <p class="text-gray-500 text-lg">No RFQs available.</p>
+        <% if current_user.buyer? %>
+          <%= link_to "Create your first RFQ", new_rfq_path, class: "mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

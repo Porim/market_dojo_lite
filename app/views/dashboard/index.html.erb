@@ -1,0 +1,149 @@
+<% if user_signed_in? %>
+  <div class="space-y-6">
+    <h1 class="text-3xl font-bold text-gray-900">Welcome, <%= current_user.name %></h1>
+    
+    <% if current_user.buyer? %>
+      <!-- Buyer Dashboard -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-lg shadow p-6">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold">My RFQs</h2>
+            <%= link_to "Create New", new_rfq_path, class: "bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" %>
+          </div>
+          <% if @rfqs.any? %>
+            <div class="space-y-3">
+              <% @rfqs.limit(5).each do |rfq| %>
+                <div class="border-b pb-3">
+                  <h3 class="font-medium"><%= link_to rfq.title, rfq, class: "hover:text-blue-600" %></h3>
+                  <p class="text-sm text-gray-600">
+                    Status: <%= rfq.status.capitalize %> | 
+                    Quotes: <%= rfq.quotes.count %> |
+                    Deadline: <%= rfq.deadline.strftime("%B %d, %Y") %>
+                  </p>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <p class="text-gray-500">No RFQs created yet.</p>
+          <% end %>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6">
+          <h2 class="text-xl font-semibold mb-4">Active Auctions</h2>
+          <% if @active_auctions.any? %>
+            <div class="space-y-3">
+              <% @active_auctions.limit(5).each do |auction| %>
+                <div class="border-b pb-3">
+                  <h3 class="font-medium"><%= link_to auction.rfq.title, rfq_auction_path(auction.rfq), class: "hover:text-blue-600" %></h3>
+                  <p class="text-sm text-gray-600">
+                    Current Price: £<%= auction.current_price || "N/A" %> |
+                    Ends: <%= auction.end_time.strftime("%H:%M %B %d") %>
+                  </p>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <p class="text-gray-500">No active auctions.</p>
+          <% end %>
+        </div>
+      </div>
+
+    <% else %>
+      <!-- Supplier Dashboard -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-lg shadow p-6">
+          <h2 class="text-xl font-semibold mb-4">Available RFQs</h2>
+          <% if @active_rfqs.any? %>
+            <div class="space-y-3">
+              <% @active_rfqs.limit(5).each do |rfq| %>
+                <div class="border-b pb-3">
+                  <h3 class="font-medium"><%= link_to rfq.title, rfq, class: "hover:text-blue-600" %></h3>
+                  <p class="text-sm text-gray-600">
+                    By: <%= rfq.user.company_name %> |
+                    Deadline: <%= rfq.deadline.strftime("%B %d, %Y") %>
+                  </p>
+                  <% if rfq.quotes.where(user: current_user).none? %>
+                    <%= link_to "Submit Quote", new_rfq_quote_path(rfq), class: "text-sm text-blue-600 hover:text-blue-800" %>
+                  <% else %>
+                    <span class="text-sm text-green-600">Quote Submitted</span>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <p class="text-gray-500">No active RFQs available.</p>
+          <% end %>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6">
+          <h2 class="text-xl font-semibold mb-4">My Quotes</h2>
+          <% if @my_quotes.any? %>
+            <div class="space-y-3">
+              <% @my_quotes.limit(5).each do |quote| %>
+                <div class="border-b pb-3">
+                  <h3 class="font-medium"><%= link_to quote.rfq.title, quote.rfq, class: "hover:text-blue-600" %></h3>
+                  <p class="text-sm text-gray-600">
+                    Price: £<%= quote.price %> |
+                    Submitted: <%= quote.created_at.strftime("%B %d, %Y") %>
+                  </p>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <p class="text-gray-500">No quotes submitted yet.</p>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Active Auctions</h2>
+        <% if @active_auctions.any? %>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <% @active_auctions.each do |auction| %>
+              <div class="border rounded-lg p-4">
+                <h3 class="font-medium"><%= link_to auction.rfq.title, rfq_auction_path(auction.rfq), class: "hover:text-blue-600" %></h3>
+                <p class="text-sm text-gray-600 mt-2">
+                  Current Price: £<%= auction.current_price || "N/A" %><br>
+                  Time Remaining: <%= distance_of_time_in_words(Time.current, auction.end_time) %>
+                </p>
+                <%= link_to "View Auction", rfq_auction_path(auction.rfq), class: "mt-2 inline-block text-sm bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700" %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-gray-500">No active auctions.</p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <!-- Landing Page for Non-logged in Users -->
+  <div class="text-center py-12">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">Welcome to Market Dojo Lite</h1>
+    <p class="text-xl text-gray-600 mb-8">The simplified eProcurement platform for buyers and suppliers</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-12">
+      <div class="bg-white rounded-lg shadow-lg p-8">
+        <h2 class="text-2xl font-semibold mb-4">For Buyers</h2>
+        <ul class="text-left text-gray-600 space-y-2 mb-6">
+          <li>✓ Create and manage RFQs</li>
+          <li>✓ Run reverse auctions</li>
+          <li>✓ Compare supplier quotes</li>
+          <li>✓ Track procurement savings</li>
+        </ul>
+        <%= link_to "Sign Up as Buyer", new_user_registration_path, class: "bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 inline-block" %>
+      </div>
+      
+      <div class="bg-white rounded-lg shadow-lg p-8">
+        <h2 class="text-2xl font-semibold mb-4">For Suppliers</h2>
+        <ul class="text-left text-gray-600 space-y-2 mb-6">
+          <li>✓ Access active RFQs</li>
+          <li>✓ Submit competitive quotes</li>
+          <li>✓ Participate in live auctions</li>
+          <li>✓ Win more business</li>
+        </ul>
+        <%= link_to "Sign Up as Supplier", new_user_registration_path, class: "bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 inline-block" %>
+      </div>
+    </div>
+  </div>
+<% end %>
