@@ -31,6 +31,9 @@ Rails.application.routes.draw do
       post :bid
     end
   end
+  
+  # Analytics
+  get 'analytics', to: 'analytics#index', as: :analytics
 
   # Public root
   root "dashboard#index"

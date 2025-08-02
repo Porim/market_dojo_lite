@@ -35,3 +35,14 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# GCP local configuration
+.gcp-config
+
+# Local deployment scripts that contain project IDs
+scripts/fix_deployment.sh
+scripts/build_and_deploy.sh
+scripts/quick_deploy.sh
+scripts/run_migrations.sh
+scripts/seed_database.sh
+scripts/seed_simple.sh
