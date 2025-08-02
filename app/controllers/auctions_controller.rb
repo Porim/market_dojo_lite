@@ -1,6 +1,6 @@
 class AuctionsController < ApplicationController
-  before_action :set_rfq, only: [:show, :create]
-  before_action :require_buyer!, only: [:create]
+  before_action :set_rfq, only: [ :show, :create ]
+  before_action :require_buyer!, only: [ :create ]
 
   def index
     @auctions = Auction.includes(:rfq).order(created_at: :desc)
@@ -13,12 +13,12 @@ class AuctionsController < ApplicationController
 
   def create
     @auction = @rfq.build_auction(auction_params)
-    @auction.status = 'active'
+    @auction.status = "active"
 
     if @auction.save
-      redirect_to rfq_auction_path(@rfq), notice: 'Auction was successfully created.'
+      redirect_to rfq_auction_path(@rfq), notice: "Auction was successfully created."
     else
-      redirect_to @rfq, alert: 'Failed to create auction.'
+      redirect_to @rfq, alert: "Failed to create auction."
     end
   end
 
@@ -28,9 +28,9 @@ class AuctionsController < ApplicationController
     @bid.user = current_user
 
     if @bid.save
-      redirect_to rfq_auction_path(@auction.rfq), notice: 'Bid placed successfully.'
+      redirect_to rfq_auction_path(@auction.rfq), notice: "Bid placed successfully."
     else
-      redirect_to rfq_auction_path(@auction.rfq), alert: @bid.errors.full_messages.join(', ')
+      redirect_to rfq_auction_path(@auction.rfq), alert: @bid.errors.full_messages.join(", ")
     end
   end
 

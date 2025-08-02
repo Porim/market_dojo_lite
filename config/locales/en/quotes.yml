@@ -1,0 +1,20 @@
+en:
+  quotes:
+    new:
+      title: "Submit Quote for: %{rfq_title}"
+      
+    form:
+      price_label: "Price (£)"
+      notes_label: "Notes"
+      notes_placeholder: "Add any additional information..."
+      
+    table:
+      supplier: "Supplier"
+      price: "Price"
+      notes: "Notes"
+      submitted: "Submitted"
+      
+    messages:
+      created: "Quote submitted successfully."
+      already_quoted: "You have already submitted a quote for this RFQ."
+      access_denied: "Access denied. Only suppliers can submit quotes."

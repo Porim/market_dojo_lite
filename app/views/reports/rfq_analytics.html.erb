@@ -1,0 +1,76 @@
+<div class="max-w-7xl mx-auto">
+  <div class="mb-6">
+    <%= link_to "← Back to Reports", reports_path, class: "text-blue-600 hover:text-blue-800" %>
+  </div>
+  
+  <h1 class="text-3xl font-bold text-gray-900 mb-6">RFQ Analytics</h1>
+  
+  <!-- RFQ Overview Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <div class="bg-white shadow rounded-lg p-6">
+      <p class="text-sm font-medium text-gray-500">Total RFQs</p>
+      <p class="text-2xl font-bold text-gray-900"><%= @rfq_stats[:total] %></p>
+    </div>
+    <div class="bg-white shadow rounded-lg p-6">
+      <p class="text-sm font-medium text-gray-500">Published</p>
+      <p class="text-2xl font-bold text-green-600"><%= @rfq_stats[:published] %></p>
+    </div>
+    <div class="bg-white shadow rounded-lg p-6">
+      <p class="text-sm font-medium text-gray-500">Closed</p>
+      <p class="text-2xl font-bold text-blue-600"><%= @rfq_stats[:closed] %></p>
+    </div>
+    <div class="bg-white shadow rounded-lg p-6">
+      <p class="text-sm font-medium text-gray-500">Avg Cycle Time</p>
+      <p class="text-2xl font-bold text-gray-900"><%= @avg_cycle_time.round(1) %> days</p>
+    </div>
+  </div>
+  
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- RFQ Status Distribution -->
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">RFQ Status Distribution</h2>
+      <% if @rfq_stats.values.sum > 0 %>
+        <%= pie_chart @rfq_stats.except(:total), donut: true, height: "300px" %>
+      <% else %>
+        <p class="text-gray-500">No data available</p>
+      <% end %>
+    </div>
+    
+    <!-- Average Quotes per RFQ -->
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">Average Quotes per RFQ (Monthly)</h2>
+      <% if @quotes_per_rfq.any? %>
+        <%= line_chart @quotes_per_rfq, height: "300px" %>
+      <% else %>
+        <p class="text-gray-500">No data available</p>
+      <% end %>
+    </div>
+  </div>
+  
+  <!-- Cycle Time Analysis -->
+  <div class="bg-white shadow rounded-lg p-6 mt-6">
+    <h2 class="text-xl font-semibold mb-4">RFQ Cycle Time Distribution</h2>
+    <% if @cycle_times.any? %>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="text-center">
+          <p class="text-sm text-gray-500">Minimum</p>
+          <p class="text-xl font-semibold"><%= @cycle_times.min.round(1) %> days</p>
+        </div>
+        <div class="text-center">
+          <p class="text-sm text-gray-500">Average</p>
+          <p class="text-xl font-semibold"><%= @avg_cycle_time.round(1) %> days</p>
+        </div>
+        <div class="text-center">
+          <p class="text-sm text-gray-500">Maximum</p>
+          <p class="text-xl font-semibold"><%= @cycle_times.max.round(1) %> days</p>
+        </div>
+        <div class="text-center">
+          <p class="text-sm text-gray-500">Median</p>
+          <p class="text-xl font-semibold"><%= @cycle_times.sort[@cycle_times.size/2].round(1) %> days</p>
+        </div>
+      </div>
+    <% else %>
+      <p class="text-gray-500">No completed RFQs to analyze</p>
+    <% end %>
+  </div>
+</div>

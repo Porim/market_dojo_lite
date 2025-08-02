@@ -1,0 +1,47 @@
+es:
+  rfqs:
+    index:
+      title: "Solicitudes de Cotización"
+      new_rfq: "Nueva Solicitud"
+      your_rfqs: "Tus Solicitudes"
+      available_rfqs: "Solicitudes Disponibles"
+      no_rfqs: "No se encontraron solicitudes"
+      
+    show:
+      by: "por"
+      description: "Descripción"
+      deadline: "Fecha límite"
+      attachments: "Archivos adjuntos"
+      quotes: "Cotizaciones"
+      no_quotes: "No se han enviado cotizaciones todavía."
+      submit_quote: "Enviar Cotización"
+      start_auction: "Iniciar Subasta"
+      active_auction: "Subasta Activa"
+      current_price: "Precio Actual"
+      time_remaining: "Tiempo Restante"
+      view_auction: "Ver Subasta"
+      
+    new:
+      title: "Crear Nueva Solicitud"
+      
+    edit:
+      title: "Editar Solicitud"
+      current_attachments: "Archivos Actuales"
+      add_attachments: "Agregar Más Archivos"
+      
+    form:
+      title_label: "Título"
+      description_label: "Descripción"
+      deadline_label: "Fecha límite"
+      status_label: "Estado"
+      attachments_label: "Archivos adjuntos"
+      upload_files: "Subir archivos"
+      drag_drop: "o arrastrar y soltar"
+      file_types: "PDF, DOC, DOCX, XLS, XLSX hasta 10MB cada uno"
+      selected_files: "Archivos seleccionados:"
+      
+    messages:
+      created: "La solicitud se creó correctamente."
+      updated: "La solicitud se actualizó correctamente."
+      destroyed: "La solicitud se eliminó correctamente."
+      access_denied: "Acceso denegado. Solo los compradores pueden realizar esta acción."

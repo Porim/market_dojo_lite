@@ -1,0 +1,53 @@
+en:
+  app_name: "Market Dojo Lite"
+  
+  navigation:
+    dashboard: "Dashboard"
+    rfqs: "RFQs"
+    auctions: "Auctions"
+    analytics: "Analytics"
+    api_docs: "API Docs"
+    settings: "Settings"
+    logout: "Logout"
+    login: "Login"
+    sign_up: "Sign Up"
+    
+  common:
+    actions:
+      create: "Create"
+      edit: "Edit"
+      update: "Update"
+      delete: "Delete"
+      cancel: "Cancel"
+      save: "Save"
+      submit: "Submit"
+      back: "Back"
+      download: "Download"
+      view: "View"
+      search: "Search"
+    
+    status:
+      active: "Active"
+      inactive: "Inactive"
+      draft: "Draft"
+      published: "Published"
+      closed: "Closed"
+      pending: "Pending"
+      accepted: "Accepted"
+      rejected: "Rejected"
+      
+    messages:
+      confirm_delete: "Are you sure?"
+      loading: "Loading..."
+      no_data: "No data available"
+      error: "An error occurred"
+      success: "Success!"
+      
+  roles:
+    buyer: "Buyer"
+    supplier: "Supplier"
+    
+  time:
+    formats:
+      short: "%b %d, %Y"
+      long: "%B %d, %Y at %I:%M %p"

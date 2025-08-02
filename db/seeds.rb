@@ -12,13 +12,14 @@ Bid.destroy_all
 Auction.destroy_all
 Quote.destroy_all
 Rfq.destroy_all
+EmailPreference.destroy_all
 User.destroy_all
 
 puts "✓ Database cleaned"
 
 # Arrays for varied data
-company_types = ['Corp', 'Ltd', 'Inc', 'Group', 'Holdings', 'International', 'Solutions', 'Services']
-industries = ['Technology', 'Manufacturing', 'Retail', 'Healthcare', 'Finance', 'Construction', 'Logistics', 'Energy']
+company_types = [ 'Corp', 'Ltd', 'Inc', 'Group', 'Holdings', 'International', 'Solutions', 'Services' ]
+industries = [ 'Technology', 'Manufacturing', 'Retail', 'Healthcare', 'Finance', 'Construction', 'Logistics', 'Energy' ]
 
 # Create buyers with varied companies
 puts "\nCreating buyers..."
@@ -56,7 +57,7 @@ suppliers = []
     password: "password123",
     name: Faker::Name.name,
     role: "supplier",
-    company_name: "#{Faker::Company.name} #{['Supplies', 'Industries', 'Manufacturing', 'Trading', 'Distribution'].sample}",
+    company_name: "#{Faker::Company.name} #{[ 'Supplies', 'Industries', 'Manufacturing', 'Trading', 'Distribution' ].sample}",
     phone: Faker::PhoneNumber.phone_number
   )
 end
@@ -82,9 +83,9 @@ rfqs = []
 40.times do |i|
   created_date = Faker::Date.between(from: 6.months.ago, to: 1.month.ago)
   deadline = created_date + rand(7..21).days
-  
+
   rfq = Rfq.create!(
-    title: "#{['Urgent', 'Annual', 'Q1', 'Q2', 'Emergency', 'Scheduled'].sample} #{Faker::Commerce.product_name} #{['Supply', 'Contract', 'Procurement', 'Order'].sample}",
+    title: "#{[ 'Urgent', 'Annual', 'Q1', 'Q2', 'Emergency', 'Scheduled' ].sample} #{Faker::Commerce.product_name} #{[ 'Supply', 'Contract', 'Procurement', 'Order' ].sample}",
     description: Faker::Lorem.paragraphs(number: 3).join("\n\n"),
     user: buyers.sample,
     deadline: deadline,
@@ -92,9 +93,9 @@ rfqs = []
     created_at: created_date,
     updated_at: deadline + 1.day
   )
-  
+
   # Add quotes from multiple unique suppliers
-  num_quotes = [rand(3..8), suppliers.count].min
+  num_quotes = [ rand(3..8), suppliers.count ].min
   participating_suppliers = suppliers.sample(num_quotes)
   participating_suppliers.each do |supplier|
     quote_date = Faker::Date.between(from: rfq.created_at, to: rfq.deadline)
@@ -107,7 +108,7 @@ rfqs = []
       updated_at: quote_date
     )
   end
-  
+
   rfqs << rfq
 end
 
@@ -115,9 +116,9 @@ end
 25.times do |i|
   created_date = Faker::Date.between(from: 14.days.ago, to: 1.day.ago)
   deadline = Faker::Date.between(from: 1.day.from_now, to: 21.days.from_now)
-  
+
   rfq = Rfq.create!(
-    title: "#{['New', 'Repeat', 'Special', 'Standard'].sample} #{Faker::Commerce.product_name} #{['Requirements', 'Tender', 'RFQ', 'Bidding'].sample}",
+    title: "#{[ 'New', 'Repeat', 'Special', 'Standard' ].sample} #{Faker::Commerce.product_name} #{[ 'Requirements', 'Tender', 'RFQ', 'Bidding' ].sample}",
     description: Faker::Lorem.paragraphs(number: 4).join("\n\n"),
     user: buyers.sample,
     deadline: deadline,
@@ -125,9 +126,9 @@ end
     created_at: created_date,
     updated_at: created_date
   )
-  
+
   # Add some quotes (not all suppliers have quoted yet)
-  num_quotes = [rand(0..5), suppliers.count].min
+  num_quotes = [ rand(0..5), suppliers.count ].min
   participating_suppliers = suppliers.sample(num_quotes)
   participating_suppliers.each do |supplier|
     Quote.create!(
@@ -139,14 +140,14 @@ end
       updated_at: Date.today
     )
   end
-  
+
   rfqs << rfq
 end
 
 # Draft RFQs
 10.times do |i|
   rfq = Rfq.create!(
-    title: "DRAFT: #{Faker::Commerce.product_name} #{['Specification', 'Requirements', 'Proposal'].sample}",
+    title: "DRAFT: #{Faker::Commerce.product_name} #{[ 'Specification', 'Requirements', 'Proposal' ].sample}",
     description: Faker::Lorem.paragraphs(number: 2).join("\n\n"),
     user: buyers.sample,
     deadline: Faker::Date.between(from: 7.days.from_now, to: 30.days.from_now),
@@ -171,12 +172,12 @@ demo_rfq1 = demo_buyer.rfqs.create!(
 # Add quotes from multiple suppliers including demo supplier
 # Ensure unique suppliers by excluding demo supplier from the sample
 other_suppliers = suppliers.reject { |s| s == demo_supplier }.sample(4)
-[demo_supplier, *other_suppliers].each_with_index do |supplier, index|
+[ demo_supplier, *other_suppliers ].each_with_index do |supplier, index|
   Quote.create!(
     rfq: demo_rfq1,
     user: supplier,
     price: 35000 + (index * 2000),
-    notes: supplier == demo_supplier ? 
+    notes: supplier == demo_supplier ?
       "We can provide all items from our premium range with a 5-year warranty. Free delivery and installation included." :
       Faker::Lorem.paragraph(sentence_count: 3)
   )
@@ -257,7 +258,7 @@ puts "✓ Created auctions with bids"
 puts "\nCreating RFQs for analytics patterns..."
 
 # Seasonal patterns
-seasons = ['Spring', 'Summer', 'Autumn', 'Winter']
+seasons = [ 'Spring', 'Summer', 'Autumn', 'Winter' ]
 4.times do |quarter|
   10.times do |i|
     date = (3 - quarter).months.ago + i.days
@@ -269,9 +270,9 @@ seasons = ['Spring', 'Summer', 'Autumn', 'Winter']
       created_at: date,
       updated_at: date + 15.days
     )
-    
+
     # Add quotes from unique suppliers
-    num_quotes = [rand(2..5), suppliers.count].min
+    num_quotes = [ rand(2..5), suppliers.count ].min
     quote_suppliers = suppliers.sample(num_quotes)
     quote_suppliers.each do |supplier|
       Quote.create!(

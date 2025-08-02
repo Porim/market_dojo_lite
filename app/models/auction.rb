@@ -9,16 +9,16 @@ class Auction < ApplicationRecord
   validates :current_price, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
   # Scopes
-  scope :active, -> { where(status: 'active').where('start_time <= ? AND end_time > ?', Time.current, Time.current) }
-  scope :upcoming, -> { where(status: 'pending').where('start_time > ?', Time.current) }
-  scope :completed, -> { where(status: 'completed') }
+  scope :active, -> { where(status: "active").where("start_time <= ? AND end_time > ?", Time.current, Time.current) }
+  scope :upcoming, -> { where(status: "pending").where("start_time > ?", Time.current) }
+  scope :completed, -> { where(status: "completed") }
 
   # Callbacks
   before_validation :set_default_status, on: :create
 
   # Methods
   def active?
-    status == 'active' && Time.current.between?(start_time, end_time)
+    status == "active" && Time.current.between?(start_time, end_time)
   end
 
   def time_remaining
@@ -29,6 +29,6 @@ class Auction < ApplicationRecord
   private
 
   def set_default_status
-    self.status ||= 'pending'
+    self.status ||= "pending"
   end
 end

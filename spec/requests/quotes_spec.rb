@@ -28,7 +28,7 @@ RSpec.describe "Quotes", type: :request do
 
       it "prevents duplicate quotes" do
         create(:quote, rfq: rfq, user: supplier)
-        
+
         quote_params = {
           quote: {
             price: 4500,
@@ -45,7 +45,7 @@ RSpec.describe "Quotes", type: :request do
 
       it "cannot quote on draft RFQ" do
         draft_rfq = create(:rfq, status: 'draft')
-        
+
         expect {
           post rfq_quotes_path(draft_rfq), params: { quote: { price: 1000 } }
         }.to raise_error(ActiveRecord::RecordNotFound)
@@ -57,7 +57,7 @@ RSpec.describe "Quotes", type: :request do
 
       it "denies access" do
         post rfq_quotes_path(rfq), params: { quote: { price: 1000 } }
-        
+
         expect(response).to redirect_to(root_path)
         expect(response.body).to include("Access denied")
       end

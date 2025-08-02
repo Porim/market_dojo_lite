@@ -33,25 +33,37 @@
             </div>
             <% if user_signed_in? %>
               <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-                <%= link_to "Dashboard", root_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" %>
-                <%= link_to "RFQs", rfqs_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
-                <%= link_to "Auctions", auctions_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
+                <%= link_to t('navigation.dashboard'), root_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" %>
+                <%= link_to t('navigation.rfqs'), rfqs_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
+                <%= link_to t('navigation.auctions'), auctions_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
                 <% if current_user.buyer? %>
-                  <%= link_to "Analytics", analytics_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
+                  <%= link_to t('navigation.analytics'), analytics_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
+                  <%= link_to "Reports", reports_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
                 <% end %>
+                <%= link_to t('navigation.api_docs'), api_docs_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
               </div>
             <% end %>
           </div>
           <div class="flex items-center">
+            <!-- Language Switcher -->
+            <div class="mr-4">
+              <select onchange="switchLanguage(this.value)" class="text-sm border-gray-300 rounded-md">
+                <option value="en" <%= 'selected' if I18n.locale == :en %>>English</option>
+                <option value="es" <%= 'selected' if I18n.locale == :es %>>Español</option>
+                <option value="fr" <%= 'selected' if I18n.locale == :fr %>>Français</option>
+                <option value="de" <%= 'selected' if I18n.locale == :de %>>Deutsch</option>
+              </select>
+            </div>
+            
             <% if user_signed_in? %>
               <span class="text-sm text-gray-500 mr-4">
-                <%= current_user.name %> (<%= current_user.role.capitalize %>)
+                <%= current_user.name %> (<%= t("roles.#{current_user.role}") %>)
               </span>
-              <%= link_to "Settings", edit_user_registration_path, class: "text-sm text-gray-500 hover:text-gray-900 mr-4" %>
-              <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "text-sm text-gray-500 hover:text-gray-900" %>
+              <%= link_to t('navigation.settings'), edit_user_registration_path, class: "text-sm text-gray-500 hover:text-gray-900 mr-4" %>
+              <%= button_to t('navigation.logout'), destroy_user_session_path, method: :delete, class: "text-sm text-gray-500 hover:text-gray-900" %>
             <% else %>
-              <%= link_to "Login", new_user_session_path, class: "text-sm text-gray-500 hover:text-gray-900 mr-4" %>
-              <%= link_to "Sign Up", new_user_registration_path, class: "text-sm bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" %>
+              <%= link_to t('navigation.login'), new_user_session_path, class: "text-sm text-gray-500 hover:text-gray-900 mr-4" %>
+              <%= link_to t('navigation.sign_up'), new_user_registration_path, class: "text-sm bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" %>
             <% end %>
           </div>
         </div>
@@ -73,5 +85,23 @@
     <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <%= yield %>
     </main>
+    
+    <script>
+      function switchLanguage(locale) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '<%= switch_locale_path(locale: 'LOCALE') %>'.replace('LOCALE', locale);
+        
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = 'authenticity_token';
+        csrfInput.value = csrfToken;
+        form.appendChild(csrfInput);
+        
+        document.body.appendChild(form);
+        form.submit();
+      }
+    </script>
   </body>
 </html>

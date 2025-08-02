@@ -3,26 +3,49 @@
     <div class="flex justify-between items-start">
       <div>
         <h1 class="text-3xl font-bold text-gray-900"><%= @rfq.title %></h1>
-        <p class="text-gray-500 mt-1">by <%= @rfq.user.company_name %></p>
+        <p class="text-gray-500 mt-1"><%= t('rfqs.show.by') %> <%= @rfq.user.company_name %></p>
       </div>
       <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full 
         <%= @rfq.status == 'published' ? 'bg-green-100 text-green-800' : 
            @rfq.status == 'closed' ? 'bg-red-100 text-red-800' : 
            'bg-gray-100 text-gray-800' %>">
-        <%= @rfq.status.capitalize %>
+        <%= t("common.status.#{@rfq.status}") %>
       </span>
     </div>
 
     <div class="mt-6 space-y-4">
       <div>
-        <h3 class="text-sm font-medium text-gray-700">Description</h3>
+        <h3 class="text-sm font-medium text-gray-700"><%= t('rfqs.show.description') %></h3>
         <p class="mt-1 text-gray-900"><%= simple_format(@rfq.description) %></p>
       </div>
 
       <div>
-        <h3 class="text-sm font-medium text-gray-700">Deadline</h3>
+        <h3 class="text-sm font-medium text-gray-700"><%= t('rfqs.show.deadline') %></h3>
         <p class="mt-1 text-gray-900"><%= @rfq.deadline.strftime("%B %d, %Y at %I:%M %p") %></p>
       </div>
+
+      <% if @rfq.documents.attached? %>
+        <div>
+          <h3 class="text-sm font-medium text-gray-700">Attachments</h3>
+          <div class="mt-2 space-y-2">
+            <% @rfq.documents.each do |document| %>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div class="flex items-center space-x-3">
+                  <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                  </svg>
+                  <div>
+                    <p class="text-sm font-medium text-gray-900"><%= document.filename %></p>
+                    <p class="text-xs text-gray-500"><%= number_to_human_size(document.byte_size) %></p>
+                  </div>
+                </div>
+                <%= link_to "Download", document_path(document.signed_id, disposition: "attachment"), 
+                    class: "text-sm text-blue-600 hover:text-blue-500" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
 
     <% if current_user.buyer? && @rfq.user == current_user %>

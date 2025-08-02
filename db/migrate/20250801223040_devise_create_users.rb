@@ -34,7 +34,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[8.0]
 
 
       t.timestamps null: false
-      
+
       # Custom fields
       t.string :name
       t.string :role, null: false, default: "buyer"
