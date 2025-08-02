@@ -1,0 +1,104 @@
+<div class="space-y-6">
+  <h1 class="text-3xl font-bold text-gray-900">Analytics Dashboard</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <!-- KPI Cards -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-sm font-medium text-gray-500">Total RFQs</h3>
+      <p class="text-3xl font-bold text-gray-900"><%= current_user.rfqs.count %></p>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-sm font-medium text-gray-500">Active Auctions</h3>
+      <p class="text-3xl font-bold text-green-600"><%= @active_auctions_count %></p>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-sm font-medium text-gray-500">Avg Quotes per RFQ</h3>
+      <p class="text-3xl font-bold text-blue-600"><%= @avg_quotes_per_rfq.round(1) %></p>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-sm font-medium text-gray-500">Total Quotes</h3>
+      <p class="text-3xl font-bold text-purple-600"><%= Quote.joins(:rfq).where(rfqs: { user_id: current_user.id }).count %></p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- RFQs by Status -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">RFQs by Status</h2>
+      <%= pie_chart @rfqs_by_status, 
+          colors: ["#10B981", "#3B82F6", "#6B7280"],
+          donut: true,
+          height: "300px" %>
+    </div>
+
+    <!-- RFQs Over Time -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">RFQs Created Over Time</h2>
+      <%= line_chart @rfqs_by_month, 
+          height: "300px",
+          colors: ["#3B82F6"] %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Quotes by RFQ -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">Quotes per RFQ</h2>
+      <%= column_chart @quotes_by_rfq, 
+          height: "300px",
+          colors: ["#8B5CF6"] %>
+    </div>
+
+    <!-- Savings Percentage -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">Savings by RFQ (%)</h2>
+      <% if @savings_data.any? %>
+        <%= bar_chart @savings_data, 
+            height: "300px",
+            colors: ["#10B981"],
+            suffix: "%" %>
+      <% else %>
+        <p class="text-gray-500 text-center py-8">No savings data available yet</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Top Suppliers -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-semibold mb-4">Top 5 Suppliers by Average Quote Price</h2>
+    <% if @top_suppliers.any? %>
+      <%= bar_chart @top_suppliers, 
+          height: "300px",
+          colors: ["#F59E0B"],
+          prefix: "£" %>
+    <% else %>
+      <p class="text-gray-500 text-center py-8">No supplier data available yet</p>
+    <% end %>
+  </div>
+
+  <!-- Summary Stats -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-semibold mb-4">Summary Statistics</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <h3 class="text-sm font-medium text-gray-500">Average Savings</h3>
+        <p class="text-2xl font-bold text-green-600">
+          <%= @savings_data.values.any? ? "#{@savings_data.values.sum / @savings_data.values.count}%" : "0%" %>
+        </p>
+      </div>
+      <div>
+        <h3 class="text-sm font-medium text-gray-500">Total Auctions</h3>
+        <p class="text-2xl font-bold text-blue-600"><%= @auctions_count %></p>
+      </div>
+      <div>
+        <h3 class="text-sm font-medium text-gray-500">Unique Suppliers</h3>
+        <p class="text-2xl font-bold text-purple-600">
+          <%= User.suppliers.joins(:quotes => :rfq).where(rfqs: { user_id: current_user.id }).distinct.count %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+# This file specifies files that are *not* uploaded to Google Cloud Platform
+# using gcloud. It follows the same syntax as .gitignore, with the addition of
+# "#!include" directives (which insert the entries of the given .gitignore-style
+# file at that point).
+
+.gcloudignore
+.git
+.gitignore
+
+# Ruby/Rails specific
+*.gem
+*.rbc
+/.config
+/coverage/
+/InstalledFiles
+/pkg/
+/spec/reports/
+/spec/tmp/
+/test/tmp/
+/test/version_tmp/
+/tmp/
+/log/
+!/log/.keep
+/storage/
+!/storage/.keep
+
+# Ignore bundler config
+/.bundle
+/vendor/bundle/
+
+# Ignore all logfiles and tempfiles
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore node_modules
+/node_modules
+/yarn-error.log
+
+# Ignore precompiled assets
+/public/assets
+/public/packs
+/public/packs-test
+
+# Ignore master key for decrypting credentials
+/config/master.key
+/config/credentials/*.key
+
+# Ignore development/test databases
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-*
+
+# Ignore other unnecessary files
+.DS_Store
+.idea
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.settings
+.tmproj
+*.tmproj
+*.log
+.env
+.env.*
+
+# Documentation
+/docs/
+README.md
+*.md

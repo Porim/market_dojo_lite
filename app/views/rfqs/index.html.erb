@@ -6,7 +6,24 @@
     <% end %>
   </div>
 
-  <div class="bg-white shadow rounded-lg">
+  <!-- React Search Filter Component -->
+  <div data-controller="react-component"
+       data-react-component-component-value="RFQSearchFilter"
+       data-react-component-props-value='<%= {
+         rfqs: @rfqs.map { |rfq| {
+           id: rfq.id,
+           title: rfq.title,
+           description: rfq.description,
+           status: rfq.status,
+           deadline: rfq.deadline,
+           created_at: rfq.created_at,
+           quotes_count: rfq.quotes.count
+         }},
+         onFilter: "window.filterRFQs"
+       }.to_json %>'>
+  </div>
+
+  <div class="bg-white shadow rounded-lg" id="rfqs-table">
     <% if @rfqs.any? %>
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
@@ -21,7 +38,7 @@
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
           <% @rfqs.each do |rfq| %>
-            <tr>
+            <tr data-rfq-id="<%= rfq.id %>">
               <td class="px-6 py-4 whitespace-nowrap">
                 <%= link_to rfq.title, rfq, class: "text-blue-600 hover:text-blue-900" %>
               </td>
