@@ -34,10 +34,11 @@ Market Dojo Lite is a weekend project demonstrating proficiency in building mode
 - **Factory Bot & Faker** - Test data generation
 
 ### Cloud & DevOps
-- Designed for **Google Cloud Platform (GCP)** compatibility
-- Currently deployed on Fly.io (similar cloud architecture)
-- Docker containerized for easy deployment
-- GitHub Actions for CI/CD
+- **Google Cloud Platform (GCP)** - Full deployment with Cloud Run & Cloud SQL
+- **Fly.io** - Alternative deployment option
+- **Docker** containerized with multi-platform support
+- **PostgreSQL** for production database
+- Automated deployment scripts included
 
 ## Features
 
@@ -110,16 +111,15 @@ bundle exec rspec
 
 ### Demo Accounts
 
-The seed data creates several demo accounts:
+The enhanced seed data creates comprehensive demo accounts:
 
-**Buyers:**
-- buyer1@example.com / password123 (ABC Corp)
-- buyer2@example.com / password123 (XYZ Ltd)
+**Main Demo Accounts:**
+- buyer@demo.com / password (Demo Buyer Corp)
+- supplier@demo.com / password (Demo Supplier Ltd)
 
-**Suppliers:**
-- supplier1@example.com / password123 (Wilson Supplies)
-- supplier2@example.com / password123 (Brown Industries)
-- supplier3@example.com / password123 (Green Solutions)
+**Additional Test Accounts:**
+- 20+ buyer accounts (buyer1@example.com to buyer20@example.com - password: password123)
+- 30+ supplier accounts (supplier1@example.com to supplier30@example.com - password: password123)
 
 ## Architecture Decisions
 
@@ -194,20 +194,51 @@ This project was built in a 48-hour sprint using **Agile development methodology
 - ✅ Linux/Cloud deployment
 - ✅ Agile development practices
 
+## Live Demo
+
+**GCP Deployment**: https://market-dojo-lite-688981654642.europe-west2.run.app
+
+Login with:
+- Buyer: buyer@demo.com / password
+- Supplier: supplier@demo.com / password
+
+## Completed Features
+
+This project includes many "future enhancements" already implemented:
+- ✅ Advanced search and filtering (React component)
+- ✅ Analytics dashboard with charts
+- ✅ Comprehensive test suite (RSpec)
+- ✅ Real-time auction system
+- ✅ Mobile-responsive design
+- ✅ Production-ready deployment
+
 ## Future Enhancements
 
-Given more time, potential improvements include:
-- Advanced search and filtering
+Potential improvements with more time:
 - Email notifications
 - File attachments for RFQs
-- Analytics dashboard with charts
 - API for third-party integrations
-- Comprehensive test suite
-- Performance optimizations
+- Multi-language support
+- Advanced reporting features
 
 ## Deployment
 
-Ready for deployment on Fly.io:
+### Google Cloud Platform (Recommended)
+
+1. Setup GCP project:
+```bash
+./scripts/setup_gcp_generic.sh YOUR_PROJECT_ID YOUR_BILLING_ACCOUNT_ID
+```
+
+2. Build and deploy:
+```bash
+docker buildx build --platform linux/amd64 --push -t europe-west2-docker.pkg.dev/YOUR_PROJECT_ID/market-dojo-repo/market-dojo-lite:latest .
+gcloud run deploy market-dojo-lite --image YOUR_IMAGE_URL --region europe-west2
+```
+
+Full documentation in `docs/GCP_DEPLOYMENT_GUIDE.md`
+
+### Fly.io (Alternative)
 
 ```bash
 fly launch
