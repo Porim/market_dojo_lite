@@ -4,7 +4,7 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph(sentence_count: 3) }
     deadline { 1.week.from_now }
     status { "draft" }
-    association :user, factory: [:user, :buyer]
+    association :user, factory: [ :user, :buyer ]
 
     trait :published do
       status { "published" }

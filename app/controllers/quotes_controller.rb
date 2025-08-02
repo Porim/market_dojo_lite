@@ -11,7 +11,11 @@ class QuotesController < ApplicationController
     @quote.user = current_user
 
     if @quote.save
-      redirect_to @rfq, notice: 'Quote was successfully submitted.'
+      # Send email notification to buyer
+      if @rfq.user.email_preference&.quote_received?
+        NotificationMailer.quote_received(@quote).deliver_later
+      end
+      redirect_to @rfq, notice: "Quote was successfully submitted."
     else
       render :new, status: :unprocessable_entity
     end

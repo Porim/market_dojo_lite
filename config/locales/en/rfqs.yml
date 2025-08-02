@@ -1,0 +1,47 @@
+en:
+  rfqs:
+    index:
+      title: "RFQs"
+      new_rfq: "New RFQ"
+      your_rfqs: "Your RFQs"
+      available_rfqs: "Available RFQs"
+      no_rfqs: "No RFQs found"
+      
+    show:
+      by: "by"
+      description: "Description"
+      deadline: "Deadline"
+      attachments: "Attachments"
+      quotes: "Quotes"
+      no_quotes: "No quotes submitted yet."
+      submit_quote: "Submit Quote"
+      start_auction: "Start Auction"
+      active_auction: "Active Auction"
+      current_price: "Current Price"
+      time_remaining: "Time Remaining"
+      view_auction: "View Auction"
+      
+    new:
+      title: "Create New RFQ"
+      
+    edit:
+      title: "Edit RFQ"
+      current_attachments: "Current Attachments"
+      add_attachments: "Add More Attachments"
+      
+    form:
+      title_label: "Title"
+      description_label: "Description"
+      deadline_label: "Deadline"
+      status_label: "Status"
+      attachments_label: "Attachments"
+      upload_files: "Upload files"
+      drag_drop: "or drag and drop"
+      file_types: "PDF, DOC, DOCX, XLS, XLSX up to 10MB each"
+      selected_files: "Selected files:"
+      
+    messages:
+      created: "RFQ was successfully created."
+      updated: "RFQ was successfully updated."
+      destroyed: "RFQ was successfully destroyed."
+      access_denied: "Access denied. Only buyers can perform this action."

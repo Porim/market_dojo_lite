@@ -1,8 +1,8 @@
 <div class="space-y-6">
   <div class="flex justify-between items-center">
-    <h1 class="text-3xl font-bold text-gray-900">RFQs</h1>
+    <h1 class="text-3xl font-bold text-gray-900"><%= t('rfqs.index.title') %></h1>
     <% if current_user.buyer? %>
-      <%= link_to "Create New RFQ", new_rfq_path, class: "bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" %>
+      <%= link_to t('rfqs.index.new_rfq'), new_rfq_path, class: "bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" %>
     <% end %>
   </div>
 
@@ -50,7 +50,7 @@
                   <%= rfq.status == 'published' ? 'bg-green-100 text-green-800' : 
                      rfq.status == 'closed' ? 'bg-red-100 text-red-800' : 
                      'bg-gray-100 text-gray-800' %>">
-                  <%= rfq.status.capitalize %>
+                  <%= t("common.status.#{rfq.status}") %>
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -60,11 +60,11 @@
                 <%= rfq.quotes.count %>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <%= link_to "View", rfq, class: "text-blue-600 hover:text-blue-900 mr-3" %>
+                <%= link_to t('common.actions.view'), rfq, class: "text-blue-600 hover:text-blue-900 mr-3" %>
                 <% if current_user.buyer? && rfq.user == current_user %>
-                  <%= link_to "Edit", edit_rfq_path(rfq), class: "text-indigo-600 hover:text-indigo-900" %>
+                  <%= link_to t('common.actions.edit'), edit_rfq_path(rfq), class: "text-indigo-600 hover:text-indigo-900" %>
                 <% elsif current_user.supplier? && rfq.status == 'published' && rfq.quotes.where(user: current_user).none? %>
-                  <%= link_to "Submit Quote", new_rfq_quote_path(rfq), class: "text-green-600 hover:text-green-900" %>
+                  <%= link_to t('rfqs.show.submit_quote'), new_rfq_quote_path(rfq), class: "text-green-600 hover:text-green-900" %>
                 <% end %>
               </td>
             </tr>
@@ -73,9 +73,9 @@
       </table>
     <% else %>
       <div class="text-center py-12">
-        <p class="text-gray-500 text-lg">No RFQs available.</p>
+        <p class="text-gray-500 text-lg"><%= t('rfqs.index.no_rfqs') %></p>
         <% if current_user.buyer? %>
-          <%= link_to "Create your first RFQ", new_rfq_path, class: "mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" %>
+          <%= link_to t('rfqs.index.new_rfq'), new_rfq_path, class: "mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" %>
         <% end %>
       </div>
     <% end %>

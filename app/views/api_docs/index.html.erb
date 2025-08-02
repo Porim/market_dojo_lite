@@ -1,0 +1,177 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <h1 class="text-3xl font-bold text-gray-900 mb-6">API Documentation</h1>
+
+  <div class="bg-white shadow rounded-lg p-6 mb-6">
+    <h2 class="text-xl font-semibold mb-4">Your API Token</h2>
+    <div class="bg-gray-50 p-4 rounded-md">
+      <p class="text-sm text-gray-600 mb-2">Use this token in the Authorization header for all API requests:</p>
+      <code class="block bg-gray-800 text-green-400 p-3 rounded text-sm">
+        Authorization: Bearer <%= current_user.api_token %>
+      </code>
+    </div>
+    <div class="mt-4">
+      <%= button_to "Regenerate Token", api_v1_auth_regenerate_token_path, 
+          method: :post,
+          remote: true,
+          class: "px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700",
+          data: { turbo_confirm: "Are you sure? This will invalidate your current token." } %>
+    </div>
+  </div>
+
+  <div class="bg-white shadow rounded-lg p-6 mb-6">
+    <h2 class="text-xl font-semibold mb-4">Base URL</h2>
+    <code class="block bg-gray-100 p-3 rounded">
+      <%= request.base_url %>/api/v1
+    </code>
+  </div>
+
+  <div class="space-y-6">
+    <!-- Authentication -->
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">Authentication</h2>
+      
+      <div class="space-y-4">
+        <div class="border-l-4 border-blue-500 pl-4">
+          <h3 class="font-semibold">POST /api/v1/auth/login</h3>
+          <p class="text-sm text-gray-600 mt-1">Login to get API token</p>
+          <pre class="mt-2 bg-gray-100 p-3 rounded text-sm overflow-x-auto">
+{
+  "email": "user@example.com",
+  "password": "password123"
+}</pre>
+        </div>
+
+        <div class="border-l-4 border-green-500 pl-4">
+          <h3 class="font-semibold">GET /api/v1/auth/profile</h3>
+          <p class="text-sm text-gray-600 mt-1">Get current user profile</p>
+          <p class="text-sm text-gray-500 mt-1">Requires: Authentication</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RFQs -->
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">RFQs</h2>
+      
+      <div class="space-y-4">
+        <div class="border-l-4 border-green-500 pl-4">
+          <h3 class="font-semibold">GET /api/v1/rfqs</h3>
+          <p class="text-sm text-gray-600 mt-1">List RFQs (buyers see their own, suppliers see published)</p>
+          <p class="text-sm text-gray-500 mt-1">Query params: page, per_page</p>
+        </div>
+
+        <div class="border-l-4 border-green-500 pl-4">
+          <h3 class="font-semibold">GET /api/v1/rfqs/:id</h3>
+          <p class="text-sm text-gray-600 mt-1">Get RFQ details</p>
+        </div>
+
+        <div class="border-l-4 border-blue-500 pl-4">
+          <h3 class="font-semibold">POST /api/v1/rfqs</h3>
+          <p class="text-sm text-gray-600 mt-1">Create new RFQ (buyers only)</p>
+          <pre class="mt-2 bg-gray-100 p-3 rounded text-sm overflow-x-auto">
+{
+  "rfq": {
+    "title": "Office Supplies",
+    "description": "Need supplies for Q4",
+    "deadline": "2025-12-31T23:59:59Z",
+    "status": "published"
+  }
+}</pre>
+        </div>
+
+        <div class="border-l-4 border-yellow-500 pl-4">
+          <h3 class="font-semibold">PUT /api/v1/rfqs/:id</h3>
+          <p class="text-sm text-gray-600 mt-1">Update RFQ (buyers only)</p>
+        </div>
+
+        <div class="border-l-4 border-red-500 pl-4">
+          <h3 class="font-semibold">DELETE /api/v1/rfqs/:id</h3>
+          <p class="text-sm text-gray-600 mt-1">Delete RFQ (buyers only)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quotes -->
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">Quotes</h2>
+      
+      <div class="space-y-4">
+        <div class="border-l-4 border-green-500 pl-4">
+          <h3 class="font-semibold">GET /api/v1/rfqs/:rfq_id/quotes</h3>
+          <p class="text-sm text-gray-600 mt-1">List quotes for an RFQ</p>
+        </div>
+
+        <div class="border-l-4 border-blue-500 pl-4">
+          <h3 class="font-semibold">POST /api/v1/rfqs/:rfq_id/quotes</h3>
+          <p class="text-sm text-gray-600 mt-1">Submit quote (suppliers only)</p>
+          <pre class="mt-2 bg-gray-100 p-3 rounded text-sm overflow-x-auto">
+{
+  "quote": {
+    "price": 1500.00,
+    "notes": "Includes delivery and setup"
+  }
+}</pre>
+        </div>
+
+        <div class="border-l-4 border-yellow-500 pl-4">
+          <h3 class="font-semibold">PUT /api/v1/rfqs/:rfq_id/quotes/:id</h3>
+          <p class="text-sm text-gray-600 mt-1">Update quote (own quotes only)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analytics -->
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">Analytics</h2>
+      
+      <div class="space-y-4">
+        <div class="border-l-4 border-green-500 pl-4">
+          <h3 class="font-semibold">GET /api/v1/analytics/summary</h3>
+          <p class="text-sm text-gray-600 mt-1">Get analytics summary (buyers only)</p>
+        </div>
+
+        <div class="border-l-4 border-green-500 pl-4">
+          <h3 class="font-semibold">GET /api/v1/analytics/rfq/:rfq_id</h3>
+          <p class="text-sm text-gray-600 mt-1">Get RFQ-specific analytics (buyers only)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Response Format -->
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">Response Format</h2>
+      
+      <div class="space-y-4">
+        <div>
+          <h3 class="font-semibold text-green-600">Success Response</h3>
+          <pre class="mt-2 bg-gray-100 p-3 rounded text-sm overflow-x-auto">
+{
+  "data": { ... },
+  "meta": {
+    "current_page": 1,
+    "next_page": 2,
+    "prev_page": null,
+    "total_pages": 5,
+    "total_count": 47
+  }
+}</pre>
+        </div>
+
+        <div>
+          <h3 class="font-semibold text-red-600">Error Response</h3>
+          <pre class="mt-2 bg-gray-100 p-3 rounded text-sm overflow-x-auto">
+{
+  "error": "Error message",
+  "errors": ["Array of error messages"]
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rate Limiting -->
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">Rate Limiting</h2>
+      <p class="text-gray-600">API requests are limited to 1000 requests per hour per API token.</p>
+    </div>
+  </div>
+</div>

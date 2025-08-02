@@ -1,0 +1,19 @@
+New RFQ Available
+
+Dear <%= @supplier.name %>,
+
+A new Request for Quotation has been posted that may interest you:
+
+Title: <%= @rfq.title %>
+Posted by: <%= @buyer.company_name %>
+Deadline: <%= @rfq.deadline.strftime("%B %d, %Y at %I:%M %p") %>
+
+Description:
+<%= @rfq.description %>
+
+View RFQ and Submit Quote: <%= rfq_url(@rfq) %>
+
+---
+
+You received this email because you are registered as a supplier on Market Dojo Lite.
+Manage email preferences: <%= edit_user_registration_url %>

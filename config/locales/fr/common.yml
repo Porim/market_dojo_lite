@@ -1,0 +1,53 @@
+fr:
+  app_name: "Market Dojo Lite"
+  
+  navigation:
+    dashboard: "Tableau de bord"
+    rfqs: "Demandes"
+    auctions: "Enchères"
+    analytics: "Analytique"
+    api_docs: "API Docs"
+    settings: "Paramètres"
+    logout: "Déconnexion"
+    login: "Connexion"
+    sign_up: "S'inscrire"
+    
+  common:
+    actions:
+      create: "Créer"
+      edit: "Modifier"
+      update: "Mettre à jour"
+      delete: "Supprimer"
+      cancel: "Annuler"
+      save: "Enregistrer"
+      submit: "Soumettre"
+      back: "Retour"
+      download: "Télécharger"
+      view: "Voir"
+      search: "Rechercher"
+    
+    status:
+      active: "Actif"
+      inactive: "Inactif"
+      draft: "Brouillon"
+      published: "Publié"
+      closed: "Fermé"
+      pending: "En attente"
+      accepted: "Accepté"
+      rejected: "Rejeté"
+      
+    messages:
+      confirm_delete: "Êtes-vous sûr?"
+      loading: "Chargement..."
+      no_data: "Aucune donnée disponible"
+      error: "Une erreur s'est produite"
+      success: "Succès!"
+      
+  roles:
+    buyer: "Acheteur"
+    supplier: "Fournisseur"
+    
+  time:
+    formats:
+      short: "%d %b %Y"
+      long: "%d %B %Y à %H:%M"

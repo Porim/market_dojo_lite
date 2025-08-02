@@ -1,0 +1,27 @@
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <h2 style="color: #1e40af;">New RFQ Available</h2>
+  
+  <p>Dear <%= @supplier.name %>,</p>
+  
+  <p>A new Request for Quotation has been posted that may interest you:</p>
+  
+  <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <h3 style="margin-top: 0;"><%= @rfq.title %></h3>
+    <p><strong>Posted by:</strong> <%= @buyer.company_name %></p>
+    <p><strong>Deadline:</strong> <%= @rfq.deadline.strftime("%B %d, %Y at %I:%M %p") %></p>
+    <p><strong>Description:</strong></p>
+    <p><%= simple_format(@rfq.description) %></p>
+  </div>
+  
+  <p>
+    <%= link_to "View RFQ and Submit Quote", rfq_url(@rfq), 
+        style: "display: inline-block; background-color: #3b82f6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;" %>
+  </p>
+  
+  <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;">
+  
+  <p style="color: #6b7280; font-size: 14px;">
+    You received this email because you are registered as a supplier on Market Dojo Lite.
+    <%= link_to "Manage email preferences", edit_user_registration_url %>
+  </p>
+</div>
