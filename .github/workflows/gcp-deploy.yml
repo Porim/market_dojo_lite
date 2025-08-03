@@ -49,7 +49,7 @@ jobs:
             --port 8080 \
             --allow-unauthenticated \
             --add-cloudsql-instances $PROJECT_ID:$REGION:$DATABASE_INSTANCE \
-            --set-env-vars "RAILS_ENV=production,RAILS_LOG_TO_STDOUT=true,RAILS_SERVE_STATIC_FILES=true" \
+            --set-env-vars "RAILS_ENV=production,RAILS_LOG_TO_STDOUT=true,RAILS_SERVE_STATIC_FILES=true,PORT=8080" \
             --set-secrets "DATABASE_URL=database-url:latest,RAILS_MASTER_KEY=rails-secret:latest,SECRET_KEY_BASE=rails-secret:latest" \
             --memory 1Gi \
             --cpu 2 \

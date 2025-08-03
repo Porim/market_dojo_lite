@@ -53,7 +53,7 @@ COPY . .
 RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE_DUMMY=1 DATABASE_URL="postgresql://dummy" RAILS_MASTER_KEY=dummy ./bin/rails assets:precompile
+RUN SECRET_KEY_BASE_DUMMY=1 DATABASE_URL="postgresql://dummy" ./bin/rails assets:precompile
 
 
 
@@ -69,8 +69,7 @@ COPY --from=build /rails /rails
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
     mkdir -p /data && \
-    chown -R rails:rails db log storage tmp /data && \
-    chmod +x /usr/local/bin/litestream
+    chown -R rails:rails db log storage tmp /data
 USER 1000:1000
 
 # Entrypoint prepares the database.
