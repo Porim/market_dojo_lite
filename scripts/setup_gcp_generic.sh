@@ -74,14 +74,22 @@ echo "Creating database..."
 gcloud sql databases create market_dojo_production \
     --instance=market-dojo-db 2>/dev/null || echo "Database already exists"
 
+# Generate secure database password
+DB_PASSWORD=$(openssl rand -base64 32)
+
 # Create database user
-echo "Creating database user..."
+echo "Creating database user with secure password..."
 gcloud sql users create rails_user \
     --instance=market-dojo-db \
-    --password=rails123 2>/dev/null || echo "User already exists"
+    --password="$DB_PASSWORD" 2>/dev/null || echo "User already exists"
+
+# Store database password in Secret Manager
+echo -n "$DB_PASSWORD" | gcloud secrets create database-password \
+    --data-file=- \
+    --replication-policy="automatic" 2>/dev/null || echo "Secret database-password already exists"
 
 # Create database URL secret
-DB_URL="postgresql://rails_user:rails123@localhost/market_dojo_production?host=/cloudsql/${PROJECT_ID}:${REGION}:market-dojo-db"
+DB_URL="postgresql://rails_user:${DB_PASSWORD}@localhost/market_dojo_production?host=/cloudsql/${PROJECT_ID}:${REGION}:market-dojo-db"
 echo -n "$DB_URL" | gcloud secrets create database-url \
     --data-file=- \
     --replication-policy="automatic" 2>/dev/null || echo "Secret database-url already exists"
@@ -100,3 +108,5 @@ echo "     --region $REGION \\"
 echo "     --allow-unauthenticated \\"
 echo "     --add-cloudsql-instances ${PROJECT_ID}:${REGION}:market-dojo-db \\"
 echo "     --set-secrets SECRET_KEY_BASE=rails-secret:latest,DATABASE_URL=database-url:latest"
+echo ""
+echo "3. The database password has been securely generated and stored in Secret Manager as 'database-password'"
