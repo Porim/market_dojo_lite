@@ -40,6 +40,32 @@ jobs:
           docker build -t $REGION-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME/$SERVICE_NAME:${{ github.sha }} .
           docker push $REGION-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME/$SERVICE_NAME:${{ github.sha }}
 
+      - name: Update Migration Job
+        run: |
+          gcloud run jobs update market-dojo-lite-migration \
+            --image $REGION-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME/$SERVICE_NAME:${{ github.sha }} \
+            --region=$REGION \
+            --project=$PROJECT_ID || echo "Migration job will be created if it doesn't exist"
+
+      - name: Run Database Migrations
+        run: |
+          gcloud run jobs execute market-dojo-lite-migration \
+            --region=$REGION \
+            --project=$PROJECT_ID \
+            --wait || echo "Migration failed - will create job"
+          
+          # Create migration job if it doesn't exist
+          gcloud run jobs create market-dojo-lite-migration \
+            --image=$REGION-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME/$SERVICE_NAME:${{ github.sha }} \
+            --region=$REGION \
+            --project=$PROJECT_ID \
+            --set-cloudsql-instances=$PROJECT_ID:$REGION:$DATABASE_INSTANCE \
+            --set-secrets=RAILS_MASTER_KEY=rails-secret:latest,DATABASE_URL=database-url:latest \
+            --set-env-vars="RAILS_ENV=production,SKIP_DB_PREPARE=true" \
+            --command="bundle,exec,rails,db:migrate" \
+            --max-retries=3 \
+            --memory=512Mi || echo "Job already exists"
+
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy $SERVICE_NAME \
