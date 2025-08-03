@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+
+echo "Starting Rails server..."
+echo "PORT: ${PORT:-3000}"
+echo "RAILS_ENV: ${RAILS_ENV}"
+echo "Database URL is configured: ${DATABASE_URL:+yes}"
+
+# Start Rails server
+exec bundle exec rails server -b 0.0.0.0 -p "${PORT:-3000}"
