@@ -8,8 +8,10 @@
     <div class="flex space-x-2">
       <%= link_to "Export CSV", spend_analysis_reports_path(format: :csv, start_date: @start_date, end_date: @end_date), 
           class: "px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700" %>
-      <%= link_to "Export PDF", spend_analysis_reports_path(format: :pdf, start_date: @start_date, end_date: @end_date), 
-          class: "px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700" %>
+      <%# PDF export temporarily disabled %>
+      <button disabled class="px-4 py-2 bg-gray-400 text-white rounded-md cursor-not-allowed" title="PDF export coming soon">
+        Export PDF (Coming Soon)
+      </button>
     </div>
   </div>
   
