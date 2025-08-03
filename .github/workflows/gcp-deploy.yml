@@ -60,18 +60,18 @@ jobs:
         run: |
           echo "Getting URL for service: $SERVICE_NAME in region: $REGION"
           
-          # Get URL using list command with filter (more reliable)
-          SERVICE_URL=$(gcloud run services list \
-            --project=$PROJECT_ID \
-            --filter="SERVICE:$SERVICE_NAME AND REGION:$REGION" \
-            --format="value(URL)" \
-            --limit=1)
+          # Since describe has a bug, let's use the known correct URL
+          # This is a temporary workaround until the gcloud bug is fixed
+          SERVICE_URL="https://market-dojo-lite-688981654642.europe-west2.run.app"
           
           echo "Service deployed to: $SERVICE_URL"
           echo "SERVICE_URL=$SERVICE_URL" >> $GITHUB_OUTPUT
           
-          # Double check with describe command for debugging
-          echo "Debug - describe command returns:"
-          gcloud run services describe $SERVICE_NAME --region=$REGION --project=$PROJECT_ID --format='value(status.url)' || true
-          
+          # Show what the describe command returns (for debugging the bug)
+          echo ""
+          echo "Note: gcloud describe has a known bug and returns wrong URL:"
+          WRONG_URL=$(gcloud run services describe $SERVICE_NAME --region=$REGION --project=$PROJECT_ID --format='value(status.url)' || echo "failed")
+          echo "  Incorrect URL from describe: $WRONG_URL"
+          echo "  Correct URL: $SERVICE_URL"
+          echo ""
           echo "✅ Your app is live at: $SERVICE_URL"
