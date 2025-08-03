@@ -17,8 +17,15 @@ WORKDIR /rails
 # Install base packages
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 postgresql-client wget \
-    libxrender1 libfontconfig1 libx11-dev libjpeg62-turbo libxtst6 xfonts-75dpi xfonts-base && \
+    libxrender1 libfontconfig1 libx11-dev libjpeg62-turbo libxtst6 xfonts-75dpi xfonts-base locales && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Set UTF-8 locale
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
+    locale-gen
+ENV LANG=en_US.UTF-8  
+ENV LANGUAGE=en_US:en  
+ENV LC_ALL=en_US.UTF-8
 
 # Install litestream for SQLite replication
 RUN wget https://github.com/benbjohnson/litestream/releases/download/v0.3.13/litestream-v0.3.13-linux-amd64.tar.gz && \

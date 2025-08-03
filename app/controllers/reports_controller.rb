@@ -38,7 +38,8 @@ class ReportsController < ApplicationController
         render pdf: "spend_analysis_#{Date.current}",
                layout: "pdf",
                page_size: "A4",
-               margin: { top: 20, bottom: 20, left: 20, right: 20 }
+               margin: { top: 20, bottom: 20, left: 20, right: 20 },
+               encoding: "UTF-8"
       }
     end
   end
@@ -116,7 +117,8 @@ class ReportsController < ApplicationController
         render pdf: "custom_report_#{Date.current}",
                layout: "pdf",
                page_size: "A4",
-               margin: { top: 20, bottom: 20, left: 20, right: 20 }
+               margin: { top: 20, bottom: 20, left: 20, right: 20 },
+               encoding: "UTF-8"
       }
     end
   end
