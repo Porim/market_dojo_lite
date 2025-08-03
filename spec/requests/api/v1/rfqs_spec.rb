@@ -68,11 +68,14 @@ RSpec.describe "Api::V1::Rfqs", type: :request do
       end
 
       it "sends notifications when published" do
+        # Ensure we only have one supplier with email preferences
+        User.where.not(id: [ buyer.id, supplier.id ]).destroy_all
+        EmailPreference.destroy_all
         create(:email_preference, user: supplier, rfq_created: true)
 
         expect {
           post api_v1_rfqs_path, headers: headers, params: rfq_params
-        }.to have_enqueued_mail(NotificationMailer, :rfq_created)
+        }.to have_enqueued_mail(NotificationMailer, :rfq_created).once
       end
     end
 
@@ -88,9 +91,9 @@ RSpec.describe "Api::V1::Rfqs", type: :request do
   end
 
   describe "GET /api/v1/rfqs/:id" do
-    let(:rfq) { create(:rfq, :published) }
-
     it "returns RFQ details with quotes and documents" do
+      # Create RFQ owned by the buyer
+      rfq = create(:rfq, :published, user: buyer)
       quote = create(:quote, rfq: rfq)
       rfq.documents.attach(
         io: StringIO.new('test'),

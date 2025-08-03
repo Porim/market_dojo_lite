@@ -12,7 +12,9 @@ class Rfq < ApplicationRecord
   validate :acceptable_documents
 
   # Scopes
+  scope :draft, -> { where(status: "draft") }
   scope :published, -> { where(status: "published") }
+  scope :closed, -> { where(status: "closed") }
   scope :active, -> { published.where("deadline > ?", Time.current) }
 
   # Callbacks

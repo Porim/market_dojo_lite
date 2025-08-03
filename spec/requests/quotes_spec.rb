@@ -46,9 +46,9 @@ RSpec.describe "Quotes", type: :request do
       it "cannot quote on draft RFQ" do
         draft_rfq = create(:rfq, status: 'draft')
 
-        expect {
-          post rfq_quotes_path(draft_rfq), params: { quote: { price: 1000 } }
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        post rfq_quotes_path(draft_rfq), params: { quote: { price: 1000 } }
+
+        expect(response).to have_http_status(:not_found)
       end
     end
 
@@ -59,7 +59,7 @@ RSpec.describe "Quotes", type: :request do
         post rfq_quotes_path(rfq), params: { quote: { price: 1000 } }
 
         expect(response).to redirect_to(root_path)
-        expect(response.body).to include("Access denied")
+        expect(flash[:alert]).to eq("Access denied")
       end
     end
   end

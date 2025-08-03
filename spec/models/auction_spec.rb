@@ -2,11 +2,17 @@ require 'rails_helper'
 
 RSpec.describe Auction, type: :model do
   describe 'validations' do
-    it { should validate_presence_of(:status) }
     it { should validate_presence_of(:start_time) }
     it { should validate_presence_of(:end_time) }
     it { should validate_inclusion_of(:status).in_array(%w[pending active completed]) }
     it { should validate_numericality_of(:current_price).is_greater_than_or_equal_to(0).allow_nil }
+
+    it 'validates presence of status' do
+      auction = build(:auction)
+      auction.status = ''
+      expect(auction).not_to be_valid
+      expect(auction.errors[:status]).to include("can't be blank")
+    end
   end
 
   describe 'associations' do

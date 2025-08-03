@@ -45,13 +45,20 @@ class ReportsController < ApplicationController
                              COUNT(DISTINCT quotes.id) as total_quotes,
                              AVG(quotes.price) as avg_price,
                              COUNT(DISTINCT rfqs.id) as rfqs_participated')
-                     .order("total_quotes DESC")
+                     .to_a
 
     # Response time analysis
-    @response_times = Quote.joins(:rfq, :user)
-                           .where(rfqs: { user_id: current_user.id })
-                           .group("users.company_name")
-                           .average("EXTRACT(EPOCH FROM (quotes.created_at - rfqs.created_at))/3600")
+    if ActiveRecord::Base.connection.adapter_name == "SQLite"
+      @response_times = Quote.joins(:rfq, :user)
+                             .where(rfqs: { user_id: current_user.id })
+                             .group("users.company_name")
+                             .average("(julianday(quotes.created_at) - julianday(rfqs.created_at)) * 24")
+    else
+      @response_times = Quote.joins(:rfq, :user)
+                             .where(rfqs: { user_id: current_user.id })
+                             .group("users.company_name")
+                             .average("EXTRACT(EPOCH FROM (quotes.created_at - rfqs.created_at))/3600")
+    end
 
     # Win rate by supplier
     @win_rates = calculate_supplier_win_rates

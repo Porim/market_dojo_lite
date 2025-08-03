@@ -152,9 +152,9 @@ RSpec.describe "Rfqs", type: :request do
       before { sign_in other_buyer }
 
       it "denies access" do
-        expect {
-          put rfq_path(rfq), params: { rfq: { title: "Hacked" } }
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        put rfq_path(rfq), params: { rfq: { title: "Hacked" } }
+
+        expect(response).to have_http_status(:not_found)
       end
     end
   end
