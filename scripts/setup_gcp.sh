@@ -88,12 +88,22 @@ prompt_for_input "Create Cloud SQL instance? (y/n)" CREATE_DB
 if [[ "$CREATE_DB" == "y" ]]; then
     DB_INSTANCE_NAME="market-dojo-db"
     echo "Creating Cloud SQL instance: $DB_INSTANCE_NAME"
+    
+    # Generate secure passwords
+    ROOT_PASSWORD=$(openssl rand -base64 32)
+    RAILS_PASSWORD=$(openssl rand -base64 32)
+    
     gcloud sql instances create $DB_INSTANCE_NAME \
         --database-version=POSTGRES_15 \
         --tier=db-f1-micro \
         --region=$REGION \
-        --root-password=temporary123 \
+        --root-password="$ROOT_PASSWORD" \
         --database-flags=max_connections=50
+    
+    # Store root password in Secret Manager
+    echo -n "$ROOT_PASSWORD" | gcloud secrets create database-root-password \
+        --data-file=- \
+        --replication-policy="automatic" 2>/dev/null || echo "Secret database-root-password already exists"
     
     # Create database
     gcloud sql databases create market_dojo_production \
@@ -102,7 +112,12 @@ if [[ "$CREATE_DB" == "y" ]]; then
     # Create user
     gcloud sql users create rails_user \
         --instance=$DB_INSTANCE_NAME \
-        --password=rails_password_123
+        --password="$RAILS_PASSWORD"
+    
+    # Store rails user password in Secret Manager
+    echo -n "$RAILS_PASSWORD" | gcloud secrets create database-rails-password \
+        --data-file=- \
+        --replication-policy="automatic" 2>/dev/null || echo "Secret database-rails-password already exists"
     
     echo "✓ Cloud SQL instance created"
 fi
@@ -116,7 +131,7 @@ echo -n "$SECRET_KEY_BASE" | gcloud secrets create rails-secret --data-file=-
 if [[ "$CREATE_DB" == "y" ]]; then
     # Get Cloud SQL connection name
     CONNECTION_NAME=$(gcloud sql instances describe $DB_INSTANCE_NAME --format="value(connectionName)")
-    DATABASE_URL="postgresql://rails_user:rails_password_123@localhost/market_dojo_production?host=/cloudsql/$CONNECTION_NAME"
+    DATABASE_URL="postgresql://rails_user:${RAILS_PASSWORD}@localhost/market_dojo_production?host=/cloudsql/$CONNECTION_NAME"
     echo -n "$DATABASE_URL" | gcloud secrets create database-url --data-file=-
 else
     # Use SQLite for simplicity if no Cloud SQL
