@@ -4,6 +4,8 @@ source "https://rubygems.org"
 gem "rails", "~> 8.0.2"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
+# CSV library (required for Ruby 3.4+)
+gem "csv"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", ">= 2.1"
 # Use PostgreSQL in production

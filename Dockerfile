@@ -29,8 +29,7 @@ RUN wget https://github.com/benbjohnson/litestream/releases/download/v0.3.13/lit
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development" \
-    PORT="8080"
+    BUNDLE_WITHOUT="development"
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
