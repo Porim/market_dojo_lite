@@ -10,7 +10,7 @@ env:
   PROJECT_ID: market-dojo-lite-1754153513
   SERVICE_NAME: market-dojo-lite
   REGION: europe-west2
-  DATABASE_INSTANCE: market-dojo-lite-db
+  DATABASE_INSTANCE: market-dojo-db
 
 jobs:
   deploy:
