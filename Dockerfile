@@ -16,7 +16,8 @@ WORKDIR /rails
 
 # Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 postgresql-client wget && \
+    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 postgresql-client wget \
+    libxrender1 libfontconfig1 libx11-dev libjpeg62-turbo libxtst6 xfonts-75dpi xfonts-base && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install litestream for SQLite replication
@@ -24,6 +25,13 @@ RUN wget https://github.com/benbjohnson/litestream/releases/download/v0.3.13/lit
     tar -C /usr/local/bin -xzf litestream-v0.3.13-linux-amd64.tar.gz && \
     chmod +x /usr/local/bin/litestream && \
     rm litestream-v0.3.13-linux-amd64.tar.gz
+
+# Install wkhtmltopdf for PDF generation
+RUN wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bookworm_amd64.deb && \
+    apt-get update -qq && \
+    apt-get install -y ./wkhtmltox_0.12.6.1-3.bookworm_amd64.deb && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives && \
+    rm wkhtmltox_0.12.6.1-3.bookworm_amd64.deb
 
 # Set production environment
 ENV RAILS_ENV="production" \
