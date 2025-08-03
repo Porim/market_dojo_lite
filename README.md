@@ -41,6 +41,7 @@ Market Dojo Lite is a weekend project demonstrating proficiency in building mode
 - **Fly.io** - Alternative deployment option
 - **Docker** containerized with multi-platform support
 - **PostgreSQL** for production database
+- **Sentry** - Error monitoring and performance tracking
 - Automated deployment scripts included
 
 ## Features

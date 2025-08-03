@@ -380,6 +380,12 @@ GEM
       rubocop-rails (>= 2.30)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
+    sentry-rails (5.26.0)
+      railties (>= 5.0)
+      sentry-ruby (~> 5.26.0)
+    sentry-ruby (5.26.0)
+      bigdecimal
+      concurrent-ruby (~> 1.0, >= 1.0.2)
     shoulda-matchers (6.5.0)
       activesupport (>= 5.2.0)
     solid_cable (3.0.11)
@@ -489,6 +495,8 @@ DEPENDENCIES
   redis (~> 5.4)
   rspec-rails (~> 8.0)
   rubocop-rails-omakase
+  sentry-rails
+  sentry-ruby
   shoulda-matchers (~> 6.0)
   solid_cable
   solid_cache

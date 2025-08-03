@@ -86,3 +86,7 @@ gem "litestream", "~> 0.14.0"
 gem "redis", "~> 5.4"
 
 gem "aws-sdk-s3", "~> 1.195", require: false
+
+# Error monitoring
+gem "sentry-rails"
+gem "sentry-ruby"

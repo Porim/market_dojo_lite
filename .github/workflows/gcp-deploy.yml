@@ -60,7 +60,7 @@ jobs:
             --region=$REGION \
             --project=$PROJECT_ID \
             --set-cloudsql-instances=$PROJECT_ID:$REGION:$DATABASE_INSTANCE \
-            --set-secrets=RAILS_MASTER_KEY=rails-secret:latest,DATABASE_URL=database-url:latest \
+            --set-secrets=RAILS_MASTER_KEY=rails-secret:latest,DATABASE_URL=database-url:latest,SENTRY_DSN=sentry-dsn:latest \
             --set-env-vars="RAILS_ENV=production,SKIP_DB_PREPARE=true" \
             --command="bundle,exec,rails,db:migrate" \
             --max-retries=3 \
@@ -76,7 +76,7 @@ jobs:
             --allow-unauthenticated \
             --add-cloudsql-instances $PROJECT_ID:$REGION:$DATABASE_INSTANCE \
             --set-env-vars "RAILS_ENV=production,RAILS_LOG_TO_STDOUT=true,RAILS_SERVE_STATIC_FILES=true,SKIP_DB_PREPARE=true" \
-            --set-secrets "DATABASE_URL=database-url:latest,RAILS_MASTER_KEY=rails-secret:latest,SECRET_KEY_BASE=rails-secret:latest" \
+            --set-secrets "DATABASE_URL=database-url:latest,RAILS_MASTER_KEY=rails-secret:latest,SECRET_KEY_BASE=rails-secret:latest,SENTRY_DSN=sentry-dsn:latest" \
             --memory 1Gi \
             --cpu 2 \
             --timeout 300 \

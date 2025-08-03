@@ -54,6 +54,9 @@ Rails.application.routes.draw do
   # API Documentation
   get "api_docs", to: "api_docs#index", as: :api_docs
 
+  # Sentry test endpoint (only for testing)
+  get "sentry_test", to: "sentry_test#trigger_error" if Rails.env.development? || Rails.env.production?
+
   # API routes
   namespace :api do
     namespace :v1 do
