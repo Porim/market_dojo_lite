@@ -8,7 +8,13 @@ class AuctionsController < ApplicationController
 
   def show
     @auction = @rfq.auction
-    @bids = @auction.bids.includes(:user).recent if @auction
+
+    if @auction.nil?
+      redirect_to @rfq, alert: "No auction has been created for this RFQ yet."
+      return
+    end
+
+    @bids = @auction.bids.includes(:user).order(created_at: :desc)
   end
 
   def create
@@ -37,7 +43,9 @@ class AuctionsController < ApplicationController
   private
 
   def set_rfq
-    @rfq = current_user.buyer? ? current_user.rfqs.find(params[:rfq_id]) : Rfq.find(params[:rfq_id])
+    @rfq = Rfq.find(params[:rfq_id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to rfqs_path, alert: "RFQ not found."
   end
 
   def auction_params
