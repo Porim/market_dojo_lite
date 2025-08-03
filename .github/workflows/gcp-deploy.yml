@@ -59,20 +59,19 @@ jobs:
       - name: Get Service URL
         run: |
           echo "Getting URL for service: $SERVICE_NAME in region: $REGION"
-          echo "Project ID: $PROJECT_ID"
           
-          # Debug: Check current project
-          echo "Current gcloud project:"
-          gcloud config get-value project
+          # Get URL using list command with filter (more reliable)
+          SERVICE_URL=$(gcloud run services list \
+            --project=$PROJECT_ID \
+            --filter="SERVICE:$SERVICE_NAME AND REGION:$REGION" \
+            --format="value(URL)" \
+            --limit=1)
           
-          # Debug: List all services
-          echo "All Cloud Run services in project:"
-          gcloud run services list --project=$PROJECT_ID --format="table(SERVICE,REGION,URL)"
-          
-          # Get the specific service URL
-          SERVICE_URL=$(gcloud run services describe $SERVICE_NAME --region=$REGION --project=$PROJECT_ID --platform=managed --format='value(status.url)')
           echo "Service deployed to: $SERVICE_URL"
           echo "SERVICE_URL=$SERVICE_URL" >> $GITHUB_OUTPUT
           
-          # The correct URL for europe-west2
-          echo "✅ Your app is live at: https://market-dojo-lite-688981654642.europe-west2.run.app"
+          # Double check with describe command for debugging
+          echo "Debug - describe command returns:"
+          gcloud run services describe $SERVICE_NAME --region=$REGION --project=$PROJECT_ID --format='value(status.url)' || true
+          
+          echo "✅ Your app is live at: $SERVICE_URL"
