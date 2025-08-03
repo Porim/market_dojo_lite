@@ -5,13 +5,13 @@
   <div class="grid-item">
     <div class="stat-card">
       <div class="label">Total Spend</div>
-      <div class="value">£<%= number_with_delimiter(@spend_by_month.values.sum.round(2)) %></div>
+      <div class="value">£<%= number_with_delimiter((@spend_by_month.is_a?(Hash) ? @spend_by_month.values.sum : 0).round(2)) %></div>
     </div>
   </div>
   <div class="grid-item">
     <div class="stat-card">
       <div class="label">Average Monthly</div>
-      <div class="value">£<%= number_with_delimiter((@spend_by_month.values.sum / @spend_by_month.size).round(2)) rescue 0 %></div>
+      <div class="value">£<%= number_with_delimiter((@spend_by_month.is_a?(Hash) && @spend_by_month.any? ? @spend_by_month.values.sum / @spend_by_month.size : 0).round(2)) %></div>
     </div>
   </div>
   <div class="grid-item">
@@ -63,7 +63,7 @@
       </tr>
     </thead>
     <tbody>
-      <% total_spend = @top_categories.values.sum %>
+      <% total_spend = @top_categories.is_a?(Hash) ? @top_categories.values.sum : @top_categories.sum(&:last) %>
       <% @top_categories.each do |category, spend| %>
         <tr>
           <td><%= truncate(category, length: 40) %></td>
@@ -113,8 +113,8 @@
   
   <p style="margin-top: 15px;"><strong>Key Findings:</strong></p>
   <ul style="margin: 10px 0; padding-left: 20px;">
-    <li>Total spend of £<%= number_with_delimiter(@spend_by_month.values.sum.round(2)) %> across <%= @spend_by_month.size %> months</li>
-    <li>Average monthly spend of £<%= number_with_delimiter((@spend_by_month.values.sum / @spend_by_month.size).round(2)) rescue 0 %></li>
+    <li>Total spend of £<%= number_with_delimiter((@spend_by_month.is_a?(Hash) ? @spend_by_month.values.sum : 0).round(2)) %> across <%= @spend_by_month.size %> months</li>
+    <li>Average monthly spend of £<%= number_with_delimiter((@spend_by_month.is_a?(Hash) && @spend_by_month.any? ? @spend_by_month.values.sum / @spend_by_month.size : 0).round(2)) %></li>
     <li>Identified total savings opportunities of £<%= number_with_delimiter(@savings_data.sum { |s| s[:savings_amount] }.round(2)) %></li>
     <% if @savings_data.any? %>
       <li>Average savings percentage of <%= (@savings_data.sum { |s| s[:savings_percentage] } / @savings_data.size).round(2) %>% across analyzed RFQs</li>

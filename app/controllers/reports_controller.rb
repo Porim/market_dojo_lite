@@ -26,6 +26,7 @@ class ReportsController < ApplicationController
                            .sum(:price)
                            .sort_by { |_, v| -v }
                            .first(10)
+                           .to_h
 
     # Savings analysis
     @savings_data = calculate_savings_analysis(@start_date, @end_date)
