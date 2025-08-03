@@ -102,6 +102,12 @@ class ReportsController < ApplicationController
     if params[:metrics].present? && params[:dimensions].present?
       @report_data = generate_custom_report(params[:metrics], params[:dimensions], params[:filters])
     end
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data generate_custom_csv(@report_data), filename: "custom_report_#{Date.current}.csv" }
+      format.pdf { render pdf: "custom_report", layout: "pdf" }
+    end
   end
 
   private
@@ -163,5 +169,19 @@ class ReportsController < ApplicationController
     # Implementation for custom report generation
     # This would be more complex in a real application
     {}
+  end
+
+  def generate_custom_csv(report_data)
+    CSV.generate(headers: true) do |csv|
+      csv << [ "Custom Report - Generated on #{Date.current}" ]
+      csv << [] # Empty row
+
+      # Add headers based on selected metrics and dimensions
+      headers = (params[:dimensions] || []) + (params[:metrics] || [])
+      csv << headers if headers.any?
+
+      # Placeholder data - in a real app, this would be the actual report data
+      csv << [ "No data available - please implement custom report generation" ]
+    end
   end
 end
