@@ -16,8 +16,14 @@ WORKDIR /rails
 
 # Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 postgresql-client && \
+    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 postgresql-client wget && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Install litestream for SQLite replication
+RUN wget https://github.com/benbjohnson/litestream/releases/download/v0.3.13/litestream-v0.3.13-linux-amd64.tar.gz && \
+    tar -C /usr/local/bin -xzf litestream-v0.3.13-linux-amd64.tar.gz && \
+    chmod +x /usr/local/bin/litestream && \
+    rm litestream-v0.3.13-linux-amd64.tar.gz
 
 # Set production environment
 ENV RAILS_ENV="production" \
