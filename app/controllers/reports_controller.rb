@@ -34,9 +34,10 @@ class ReportsController < ApplicationController
       format.html
       format.csv { send_data generate_spend_csv, filename: "spend_analysis_#{Date.current}.csv" }
       format.pdf {
-        # For now, redirect to CSV export as PDF generation requires additional setup
-        redirect_to spend_analysis_reports_path(format: :csv),
-                    alert: "PDF export is not yet available. Downloading CSV instead."
+        render pdf: "spend_analysis_#{Date.current}",
+               layout: "pdf",
+               page_size: "A4",
+               margin: { top: 20, bottom: 20, left: 20, right: 20 }
       }
     end
   end
@@ -111,9 +112,10 @@ class ReportsController < ApplicationController
       format.html
       format.csv { send_data generate_custom_csv(@report_data), filename: "custom_report_#{Date.current}.csv" }
       format.pdf {
-        # For now, redirect to CSV export as PDF generation requires additional setup
-        redirect_to custom_report_reports_path(format: :csv, metrics: params[:metrics], dimensions: params[:dimensions]),
-                    alert: "PDF export is not yet available. Downloading CSV instead."
+        render pdf: "custom_report_#{Date.current}",
+               layout: "pdf",
+               page_size: "A4",
+               margin: { top: 20, bottom: 20, left: 20, right: 20 }
       }
     end
   end

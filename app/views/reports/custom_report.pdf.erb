@@ -1,0 +1,107 @@
+<h1>Custom Report</h1>
+<p style="color: #666; margin-bottom: 30px;">Generated on <%= Date.current.strftime("%B %d, %Y") %> at <%= Time.current.strftime("%I:%M %p") %></p>
+
+<div class="stat-card">
+  <h3>Report Parameters</h3>
+  
+  <% if params[:metrics].present? %>
+    <p><strong>Selected Metrics:</strong></p>
+    <ul style="margin: 10px 0; padding-left: 20px;">
+      <% params[:metrics].each do |metric| %>
+        <li><%= metric %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  
+  <% if params[:dimensions].present? %>
+    <p style="margin-top: 15px;"><strong>Selected Dimensions:</strong></p>
+    <ul style="margin: 10px 0; padding-left: 20px;">
+      <% params[:dimensions].each do |dimension| %>
+        <li><%= dimension %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  
+  <% if params[:filters].present? %>
+    <p style="margin-top: 15px;"><strong>Applied Filters:</strong></p>
+    <ul style="margin: 10px 0; padding-left: 20px;">
+      <% if params[:filters][:start_date].present? %>
+        <li>Start Date: <%= params[:filters][:start_date] %></li>
+      <% end %>
+      <% if params[:filters][:end_date].present? %>
+        <li>End Date: <%= params[:filters][:end_date] %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+
+<% if @report_data.present? %>
+  <h2>Report Results</h2>
+  
+  <div class="chart-placeholder">
+    <p>Report data visualization would appear here</p>
+    <p style="font-size: 12px; margin-top: 10px;">Charts are not rendered in PDF exports. Please view the web version for interactive charts.</p>
+  </div>
+  
+  <table style="margin-top: 30px;">
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Selected Metrics</td>
+        <td><%= params[:metrics]&.count || 0 %></td>
+      </tr>
+      <tr>
+        <td>Selected Dimensions</td>
+        <td><%= params[:dimensions]&.count || 0 %></td>
+      </tr>
+      <tr>
+        <td>Report Status</td>
+        <td>Generated Successfully</td>
+      </tr>
+    </tbody>
+  </table>
+<% else %>
+  <div class="stat-card" style="text-align: center; margin-top: 50px;">
+    <h3>No Data Available</h3>
+    <p style="color: #666; margin-top: 10px;">
+      This custom report requires metrics and dimensions to be selected before generating.
+    </p>
+    <p style="color: #666; margin-top: 10px;">
+      Please use the web interface to configure your report parameters.
+    </p>
+  </div>
+<% end %>
+
+<div class="page-break"></div>
+
+<h2>Report Information</h2>
+
+<div class="stat-card">
+  <p><strong>About Custom Reports</strong></p>
+  <p style="margin-top: 10px;">
+    Custom reports allow you to build tailored analytics by selecting specific metrics and dimensions that matter most to your procurement analysis. This flexibility enables deeper insights into spending patterns, supplier performance, and savings opportunities.
+  </p>
+  
+  <p style="margin-top: 15px;"><strong>Available Metrics:</strong></p>
+  <ul style="margin: 10px 0; padding-left: 20px;">
+    <% @available_metrics&.each do |metric| %>
+      <li><%= metric %></li>
+    <% end %>
+  </ul>
+  
+  <p style="margin-top: 15px;"><strong>Available Dimensions:</strong></p>
+  <ul style="margin: 10px 0; padding-left: 20px;">
+    <% @available_dimensions&.each do |dimension| %>
+      <li><%= dimension %></li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="footer" style="margin-top: 50px;">
+  <p>For interactive charts and detailed analysis, please view this report in your web browser.</p>
+</div>

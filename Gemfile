@@ -90,3 +90,7 @@ gem "aws-sdk-s3", "~> 1.195", require: false
 # Error monitoring
 gem "sentry-rails"
 gem "sentry-ruby"
+
+# PDF generation
+gem "wicked_pdf"
+gem "wkhtmltopdf-binary"
