@@ -1,5 +1,8 @@
 # Market Dojo Lite
 
+![Tests](https://github.com/Porim/market_dojo_lite/actions/workflows/test.yml/badge.svg)
+![Deploy](https://github.com/Porim/market_dojo_lite/actions/workflows/gcp-deploy.yml/badge.svg)
+
 A simplified eProcurement platform demonstration built with Ruby on Rails 8, showcasing core functionality similar to Market Dojo's procurement software. This project specifically demonstrates proficiency in the technologies mentioned in Market Dojo's job specification.
 
 ## Overview
