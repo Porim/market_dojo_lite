@@ -33,6 +33,10 @@ class Rfq < ApplicationRecord
     status == "closed"
   end
 
+  def active?
+    published? && deadline > Time.current
+  end
+
   private
 
   def set_default_status
