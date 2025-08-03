@@ -78,5 +78,5 @@ ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 # Expose port 8080 for Cloud Run
 EXPOSE 8080
 
-# Start Rails server directly on port 8080
-CMD ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "8080"]
+# Start Rails server on the port specified by Cloud Run
+CMD ["/bin/bash", "-c", "exec rails server -b 0.0.0.0 -p ${PORT:-8080}"]
