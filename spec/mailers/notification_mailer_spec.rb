@@ -34,7 +34,7 @@ RSpec.describe NotificationMailer, type: :mailer do
 
     it "renders the body" do
       expect(mail.body.encoded).to match(rfq.title)
-      expect(mail.body.encoded).to match(supplier.company_name)
+      expect(mail.body.encoded).to match(Regexp.escape(ERB::Util.html_escape(supplier.company_name)))
       expect(mail.body.encoded).to match("£")
     end
   end
