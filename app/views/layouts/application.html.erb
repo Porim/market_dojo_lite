@@ -23,78 +23,60 @@
     <%= javascript_include_tag "chartkick", "Chart.bundle" %>
   </head>
 
-  <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-    <nav class="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
+  <body class="bg-gray-50">
+    <nav class="bg-white shadow-sm border-b">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
           <div class="flex">
             <div class="flex-shrink-0 flex items-center">
-              <%= link_to "Market Dojo Lite", root_path, class: "text-xl font-bold text-gray-900 dark:text-white" %>
+              <%= link_to "Market Dojo Lite", root_path, class: "text-xl font-bold text-gray-900" %>
             </div>
             <% if user_signed_in? %>
               <!-- Navigation for medium screens -->
               <div class="hidden md:ml-4 md:flex lg:hidden md:space-x-2">
-                <%= link_to t('navigation.dashboard'), root_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-900 dark:text-gray-100" %>
-                <%= link_to t('navigation.rfqs'), rfqs_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" %>
-                <%= link_to t('navigation.auctions'), auctions_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" %>
+                <%= link_to t('navigation.dashboard'), root_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-900" %>
+                <%= link_to t('navigation.rfqs'), rfqs_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-500 hover:text-gray-900" %>
+                <%= link_to t('navigation.auctions'), auctions_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-500 hover:text-gray-900" %>
                 <% if current_user.buyer? %>
-                  <%= link_to t('navigation.analytics'), analytics_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" %>
-                  <%= link_to t('navigation.reports'), reports_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" %>
+                  <%= link_to t('navigation.analytics'), analytics_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-500 hover:text-gray-900" %>
+                  <%= link_to t('navigation.reports'), reports_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-500 hover:text-gray-900" %>
                 <% end %>
-                <%= link_to t('navigation.api_docs'), api_docs_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" %>
+                <%= link_to t('navigation.api_docs'), api_docs_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-500 hover:text-gray-900" %>
               </div>
               
               <!-- Navigation for large screens -->
               <div class="hidden lg:ml-6 lg:flex lg:space-x-4">
-                <%= link_to t('navigation.dashboard'), root_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 dark:text-gray-100" %>
-                <%= link_to t('navigation.rfqs'), rfqs_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" %>
-                <%= link_to t('navigation.auctions'), auctions_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" %>
+                <%= link_to t('navigation.dashboard'), root_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" %>
+                <%= link_to t('navigation.rfqs'), rfqs_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
+                <%= link_to t('navigation.auctions'), auctions_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
                 <% if current_user.buyer? %>
-                  <%= link_to t('navigation.analytics'), analytics_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" %>
-                  <%= link_to t('navigation.reports'), reports_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" %>
+                  <%= link_to t('navigation.analytics'), analytics_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
+                  <%= link_to t('navigation.reports'), reports_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
                 <% end %>
-                <%= link_to t('navigation.api_docs'), api_docs_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" %>
+                <%= link_to t('navigation.api_docs'), api_docs_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
               </div>
             <% end %>
           </div>
           
           <!-- Tablet Menu (medium screens) -->
           <div class="hidden md:flex lg:hidden items-center space-x-2">
-            <!-- Dark mode toggle -->
-            <button data-dark-mode-toggle class="p-2 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-              <svg class="sun-icon hidden h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
-              <svg class="moon-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-              </svg>
-            </button>
-            <select onchange="switchLanguage(this.value)" class="text-xs border-gray-300 rounded-md bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+            <select onchange="switchLanguage(this.value)" class="text-xs border-gray-300 rounded-md">
               <option value="en" <%= 'selected' if I18n.locale == :en %>>EN</option>
               <option value="es" <%= 'selected' if I18n.locale == :es %>>ES</option>
               <option value="fr" <%= 'selected' if I18n.locale == :fr %>>FR</option>
               <option value="de" <%= 'selected' if I18n.locale == :de %>>DE</option>
             </select>
             <% if user_signed_in? %>
-              <%= button_to t('navigation.logout'), destroy_user_session_path, method: :delete, class: "text-xs text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" %>
+              <%= button_to t('navigation.logout'), destroy_user_session_path, method: :delete, class: "text-xs text-gray-500 hover:text-gray-900" %>
             <% else %>
-              <%= link_to t('navigation.login'), new_user_session_path, class: "text-xs text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" %>
+              <%= link_to t('navigation.login'), new_user_session_path, class: "text-xs text-gray-500 hover:text-gray-900" %>
             <% end %>
           </div>
           
           <!-- Desktop Menu -->
           <div class="hidden lg:flex items-center space-x-3">
-            <!-- Dark mode toggle -->
-            <button data-dark-mode-toggle class="p-2 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-              <svg class="sun-icon hidden h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
-              <svg class="moon-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-              </svg>
-            </button>
             <!-- Language Switcher -->
-            <select onchange="switchLanguage(this.value)" class="text-xs border-gray-300 rounded-md bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+            <select onchange="switchLanguage(this.value)" class="text-xs border-gray-300 rounded-md">
               <option value="en" <%= 'selected' if I18n.locale == :en %>>EN</option>
               <option value="es" <%= 'selected' if I18n.locale == :es %>>ES</option>
               <option value="fr" <%= 'selected' if I18n.locale == :fr %>>FR</option>
@@ -102,20 +84,20 @@
             </select>
             
             <% if user_signed_in? %>
-              <span class="text-xs text-gray-500 hidden xl:inline dark:text-gray-400">
+              <span class="text-xs text-gray-500 hidden xl:inline">
                 <%= current_user.name %> (<%= t("roles.#{current_user.role}") %>)
               </span>
-              <%= link_to t('navigation.settings'), edit_user_registration_path, class: "text-xs text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" %>
-              <%= button_to t('navigation.logout'), destroy_user_session_path, method: :delete, class: "text-xs text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" %>
+              <%= link_to t('navigation.settings'), edit_user_registration_path, class: "text-xs text-gray-500 hover:text-gray-900" %>
+              <%= button_to t('navigation.logout'), destroy_user_session_path, method: :delete, class: "text-xs text-gray-500 hover:text-gray-900" %>
             <% else %>
-              <%= link_to t('navigation.login'), new_user_session_path, class: "text-xs text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" %>
-              <%= link_to t('navigation.sign_up'), new_user_registration_path, class: "text-xs bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800" %>
+              <%= link_to t('navigation.login'), new_user_session_path, class: "text-xs text-gray-500 hover:text-gray-900" %>
+              <%= link_to t('navigation.sign_up'), new_user_registration_path, class: "text-xs bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700" %>
             <% end %>
           </div>
           
           <!-- Mobile menu button -->
           <div class="md:hidden flex items-center">
-            <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 dark:text-gray-300 dark:hover:text-gray-200 dark:hover:bg-gray-700 dark:focus:ring-blue-400">
+            <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
               <!-- Hamburger icon -->
               <svg class="menu-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -131,36 +113,23 @@
       
       <!-- Mobile menu -->
       <div id="mobile-menu" class="md:hidden hidden">
-        <div class="px-2 pt-2 pb-3 space-y-1 border-t border-gray-200 dark:border-gray-700">
+        <div class="px-2 pt-2 pb-3 space-y-1 border-t border-gray-200">
           <% if user_signed_in? %>
-            <%= link_to t('navigation.dashboard'), root_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-gray-100 dark:hover:bg-gray-700" %>
-            <%= link_to t('navigation.rfqs'), rfqs_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-gray-100 dark:hover:bg-gray-700" %>
-            <%= link_to t('navigation.auctions'), auctions_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-gray-100 dark:hover:bg-gray-700" %>
+            <%= link_to t('navigation.dashboard'), root_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" %>
+            <%= link_to t('navigation.rfqs'), rfqs_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" %>
+            <%= link_to t('navigation.auctions'), auctions_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" %>
             <% if current_user.buyer? %>
-              <%= link_to t('navigation.analytics'), analytics_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-gray-100 dark:hover:bg-gray-700" %>
-              <%= link_to t('navigation.reports'), reports_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-gray-100 dark:hover:bg-gray-700" %>
+              <%= link_to t('navigation.analytics'), analytics_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" %>
+              <%= link_to t('navigation.reports'), reports_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" %>
             <% end %>
-            <%= link_to t('navigation.api_docs'), api_docs_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-gray-100 dark:hover:bg-gray-700" %>
+            <%= link_to t('navigation.api_docs'), api_docs_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" %>
           <% end %>
         </div>
         
-        <div class="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
+        <div class="pt-4 pb-3 border-t border-gray-200">
           <div class="px-4 space-y-3">
-            <!-- Dark mode toggle -->
-            <button data-dark-mode-toggle class="w-full flex items-center justify-between px-3 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-              <span>Dark Mode</span>
-              <div class="flex items-center">
-                <svg class="sun-icon hidden h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-                <svg class="moon-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-              </div>
-            </button>
-            
             <!-- Language Switcher -->
-            <select onchange="switchLanguage(this.value)" class="w-full text-sm border-gray-300 rounded-md bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+            <select onchange="switchLanguage(this.value)" class="w-full text-sm border-gray-300 rounded-md">
               <option value="en" <%= 'selected' if I18n.locale == :en %>>English</option>
               <option value="es" <%= 'selected' if I18n.locale == :es %>>Español</option>
               <option value="fr" <%= 'selected' if I18n.locale == :fr %>>Français</option>
@@ -168,14 +137,14 @@
             </select>
             
             <% if user_signed_in? %>
-              <div class="text-sm text-gray-500 dark:text-gray-400">
+              <div class="text-sm text-gray-500">
                 <%= current_user.name %> (<%= t("roles.#{current_user.role}") %>)
               </div>
-              <%= link_to t('navigation.settings'), edit_user_registration_path, class: "block text-sm text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100" %>
-              <%= button_to t('navigation.logout'), destroy_user_session_path, method: :delete, class: "block w-full text-left text-sm text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100" %>
+              <%= link_to t('navigation.settings'), edit_user_registration_path, class: "block text-sm text-gray-700 hover:text-gray-900" %>
+              <%= button_to t('navigation.logout'), destroy_user_session_path, method: :delete, class: "block w-full text-left text-sm text-gray-700 hover:text-gray-900" %>
             <% else %>
-              <%= link_to t('navigation.login'), new_user_session_path, class: "block text-sm text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100" %>
-              <%= link_to t('navigation.sign_up'), new_user_registration_path, class: "block text-sm bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-center dark:bg-blue-700 dark:hover:bg-blue-800" %>
+              <%= link_to t('navigation.login'), new_user_session_path, class: "block text-sm text-gray-700 hover:text-gray-900" %>
+              <%= link_to t('navigation.sign_up'), new_user_registration_path, class: "block text-sm bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-center" %>
             <% end %>
           </div>
         </div>
@@ -183,13 +152,13 @@
     </nav>
 
     <% if notice.present? %>
-      <div class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 px-4 py-3" role="alert">
+      <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3" role="alert">
         <p><%= notice %></p>
       </div>
     <% end %>
 
     <% if alert.present? %>
-      <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3" role="alert">
+      <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3" role="alert">
         <p><%= alert %></p>
       </div>
     <% end %>
