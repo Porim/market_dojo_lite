@@ -112,8 +112,8 @@ rfqs = []
   rfqs << rfq
 end
 
-# Currently active RFQs
-25.times do |i|
+# Currently active RFQs (increased to 45 for more data)
+45.times do |i|
   created_date = Faker::Date.between(from: 14.days.ago, to: 1.day.ago)
   deadline = Faker::Date.between(from: 1.day.from_now, to: 21.days.from_now)
 
@@ -254,6 +254,208 @@ puts "  - Second auction created (bids disabled in production seed)"
 
 puts "✓ Created auctions with bids"
 
+# Create 20 active auctions ending between 24 hours and few months
+puts "\nCreating 20 active auctions with varied end times..."
+auction_count = 0
+
+# Auctions ending in next 24-48 hours
+5.times do |i|
+  rfq = buyers.sample.rfqs.create!(
+    title: "AUCTION: #{Faker::Commerce.product_name} - Express Bidding",
+    description: "Urgent reverse auction. #{Faker::Lorem.paragraph(sentence_count: 5)}",
+    deadline: rand(24..48).hours.from_now,
+    status: "published"
+  )
+
+  auction = rfq.create_auction!(
+    status: "active",
+    start_time: rand(1..6).hours.ago,
+    end_time: rand(24..48).hours.from_now,
+    current_price: rand(20000..100000)
+  )
+
+  # Add some initial bids
+  num_bids = rand(3..7)
+  bid_suppliers = suppliers.sample(num_bids)
+  current_price = auction.current_price
+
+  num_bids.times do |j|
+    bid_amount = current_price - rand(500..2000)
+    Bid.create!(
+      auction: auction,
+      user: bid_suppliers[j],
+      amount: bid_amount,
+      created_at: rand(1..300).minutes.ago
+    )
+    current_price = bid_amount # Update for next bid
+  end
+  auction_count += 1
+end
+
+# Auctions ending in next week
+5.times do |i|
+  rfq = buyers.sample.rfqs.create!(
+    title: "AUCTION: #{Faker::Commerce.product_name} - Weekly Contract",
+    description: "Standard reverse auction. #{Faker::Lorem.paragraph(sentence_count: 4)}",
+    deadline: rand(3..7).days.from_now,
+    status: "published"
+  )
+
+  auction = rfq.create_auction!(
+    status: "active",
+    start_time: rand(1..2).days.ago,
+    end_time: rand(3..7).days.from_now,
+    current_price: rand(30000..150000)
+  )
+
+  # Add some bids
+  num_bids = rand(2..5)
+  bid_suppliers = suppliers.sample(num_bids)
+  current_price = auction.current_price
+
+  num_bids.times do |j|
+    bid_amount = current_price - rand(1000..5000)
+    Bid.create!(
+      auction: auction,
+      user: bid_suppliers[j],
+      amount: bid_amount,
+      created_at: rand(1..24).hours.ago
+    )
+    current_price = bid_amount # Update for next bid
+  end
+  auction_count += 1
+end
+
+# Auctions ending in next month
+5.times do |i|
+  rfq = buyers.sample.rfqs.create!(
+    title: "AUCTION: #{Faker::Commerce.product_name} - Monthly Procurement",
+    description: "Long-term reverse auction. #{Faker::Lorem.paragraph(sentence_count: 6)}",
+    deadline: rand(2..4).weeks.from_now,
+    status: "published"
+  )
+
+  auction = rfq.create_auction!(
+    status: "active",
+    start_time: rand(3..7).days.ago,
+    end_time: rand(2..4).weeks.from_now,
+    current_price: rand(50000..250000)
+  )
+
+  # Add fewer bids for longer auctions
+  num_bids = rand(1..3)
+  bid_suppliers = suppliers.sample(num_bids)
+  current_price = auction.current_price
+
+  num_bids.times do |j|
+    bid_amount = current_price - rand(2000..10000)
+    Bid.create!(
+      auction: auction,
+      user: bid_suppliers[j],
+      amount: bid_amount,
+      created_at: rand(1..3).days.ago
+    )
+    current_price = bid_amount # Update for next bid
+  end
+  auction_count += 1
+end
+
+# Auctions ending in 2-3 months
+5.times do |i|
+  rfq = buyers.sample.rfqs.create!(
+    title: "AUCTION: #{Faker::Commerce.product_name} - Quarterly Contract",
+    description: "Strategic reverse auction for Q2 2025. #{Faker::Lorem.paragraph(sentence_count: 8)}",
+    deadline: rand(2..3).months.from_now,
+    status: "published"
+  )
+
+  auction = rfq.create_auction!(
+    status: "active",
+    start_time: rand(1..2).weeks.ago,
+    end_time: rand(2..3).months.from_now,
+    current_price: rand(100000..500000)
+  )
+
+  # Just a few initial bids
+  num_bids = rand(1..2)
+  bid_suppliers = suppliers.sample(num_bids)
+  current_price = auction.current_price
+
+  num_bids.times do |j|
+    bid_amount = current_price - rand(5000..20000)
+    Bid.create!(
+      auction: auction,
+      user: bid_suppliers[j],
+      amount: bid_amount,
+      created_at: rand(1..7).days.ago
+    )
+    current_price = bid_amount # Update for next bid
+  end
+  auction_count += 1
+end
+
+puts "✓ Created #{auction_count} active auctions"
+
+# Create 10 completed auctions with many bids
+puts "\nCreating 10 completed auctions with extensive bid history..."
+completed_auction_count = 0
+
+10.times do |i|
+  # Create RFQ in the past
+  created_date = Faker::Date.between(from: 3.months.ago, to: 1.month.ago)
+  deadline = created_date + rand(7..14).days
+
+  rfq = buyers.sample.rfqs.create!(
+    title: "COMPLETED AUCTION: #{Faker::Commerce.product_name} - #{Faker::Company.catch_phrase}",
+    description: "Historical auction data. #{Faker::Lorem.paragraphs(number: 3).join("\n\n")}",
+    deadline: deadline,
+    status: "closed",
+    created_at: created_date,
+    updated_at: deadline + 1.day
+  )
+
+  auction_start = created_date + rand(1..3).days
+  auction_end = auction_start + rand(2..7).days
+  initial_price = rand(50000..300000)
+
+  auction = rfq.create_auction!(
+    status: "completed",
+    start_time: auction_start,
+    end_time: auction_end,
+    current_price: initial_price,
+    created_at: auction_start,
+    updated_at: auction_end
+  )
+
+  # Create many bids (15-30 bids per auction)
+  num_bids = rand(15..30)
+  participating_suppliers = suppliers.sample(rand(5..10))
+
+  # Skip validation by using update_column for completed auctions
+  num_bids.times do |j|
+    bid_time = auction_start + ((auction_end - auction_start) * (j.to_f / num_bids))
+    # Price decreases with each bid
+    bid_amount = auction.current_price - rand(500..3000)
+
+    bid = auction.bids.create!(
+      user: participating_suppliers.sample,
+      amount: bid_amount,
+      created_at: bid_time,
+      updated_at: bid_time
+    )
+
+    # Manually update auction price without triggering callbacks
+    auction.update_column(:current_price, bid_amount)
+  end
+
+  # Set final updated_at
+  auction.update_column(:updated_at, auction_end)
+
+  completed_auction_count += 1
+end
+
+puts "✓ Created #{completed_auction_count} completed auctions with #{Bid.where(auction: Auction.completed).count} total bids"
+
 # Create RFQs with specific patterns for analytics
 puts "\nCreating RFQs for analytics patterns..."
 
@@ -295,8 +497,13 @@ puts "  - Draft: #{Rfq.where(status: 'draft').count}"
 puts "  - Published: #{Rfq.where(status: 'published').count}"
 puts "  - Closed: #{Rfq.where(status: 'closed').count}"
 puts "Quotes: #{Quote.count}"
-puts "Auctions: #{Auction.count} (#{Auction.active.count} active)"
+puts "Auctions: #{Auction.count}"
+puts "  - Active: #{Auction.active.count}"
+puts "  - Completed: #{Auction.completed.count}"
+puts "  - Pending: #{Auction.where(status: 'pending').count}"
 puts "Bids: #{Bid.count}"
+puts "  - In active auctions: #{Bid.joins(:auction).where(auctions: { status: 'active' }).count}"
+puts "  - In completed auctions: #{Bid.joins(:auction).where(auctions: { status: 'completed' }).count}"
 puts "─" * 60
 puts "\n✅ Demo accounts:"
 puts "Buyer: buyer@demo.com / password"
