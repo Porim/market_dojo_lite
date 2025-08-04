@@ -32,7 +32,20 @@
               <%= link_to "Market Dojo Lite", root_path, class: "text-xl font-bold text-gray-900" %>
             </div>
             <% if user_signed_in? %>
-              <div class="hidden md:ml-6 md:flex md:space-x-8">
+              <!-- Navigation for medium screens -->
+              <div class="hidden md:ml-4 md:flex lg:hidden md:space-x-2">
+                <%= link_to t('navigation.dashboard'), root_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-900" %>
+                <%= link_to t('navigation.rfqs'), rfqs_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-500 hover:text-gray-900" %>
+                <%= link_to t('navigation.auctions'), auctions_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-500 hover:text-gray-900" %>
+                <% if current_user.buyer? %>
+                  <%= link_to t('navigation.analytics'), analytics_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-500 hover:text-gray-900" %>
+                  <%= link_to t('navigation.reports'), reports_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-500 hover:text-gray-900" %>
+                <% end %>
+                <%= link_to t('navigation.api_docs'), api_docs_path, class: "inline-flex items-center px-1 pt-1 text-xs font-medium text-gray-500 hover:text-gray-900" %>
+              </div>
+              
+              <!-- Navigation for large screens -->
+              <div class="hidden lg:ml-6 lg:flex lg:space-x-4">
                 <%= link_to t('navigation.dashboard'), root_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" %>
                 <%= link_to t('navigation.rfqs'), rfqs_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
                 <%= link_to t('navigation.auctions'), auctions_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
@@ -45,25 +58,40 @@
             <% end %>
           </div>
           
+          <!-- Tablet Menu (medium screens) -->
+          <div class="hidden md:flex lg:hidden items-center space-x-2">
+            <select onchange="switchLanguage(this.value)" class="text-xs border-gray-300 rounded-md">
+              <option value="en" <%= 'selected' if I18n.locale == :en %>>EN</option>
+              <option value="es" <%= 'selected' if I18n.locale == :es %>>ES</option>
+              <option value="fr" <%= 'selected' if I18n.locale == :fr %>>FR</option>
+              <option value="de" <%= 'selected' if I18n.locale == :de %>>DE</option>
+            </select>
+            <% if user_signed_in? %>
+              <%= button_to t('navigation.logout'), destroy_user_session_path, method: :delete, class: "text-xs text-gray-500 hover:text-gray-900" %>
+            <% else %>
+              <%= link_to t('navigation.login'), new_user_session_path, class: "text-xs text-gray-500 hover:text-gray-900" %>
+            <% end %>
+          </div>
+          
           <!-- Desktop Menu -->
-          <div class="hidden md:flex items-center space-x-4">
+          <div class="hidden lg:flex items-center space-x-3">
             <!-- Language Switcher -->
-            <select onchange="switchLanguage(this.value)" class="text-sm border-gray-300 rounded-md">
-              <option value="en" <%= 'selected' if I18n.locale == :en %>>English</option>
-              <option value="es" <%= 'selected' if I18n.locale == :es %>>Español</option>
-              <option value="fr" <%= 'selected' if I18n.locale == :fr %>>Français</option>
-              <option value="de" <%= 'selected' if I18n.locale == :de %>>Deutsch</option>
+            <select onchange="switchLanguage(this.value)" class="text-xs border-gray-300 rounded-md">
+              <option value="en" <%= 'selected' if I18n.locale == :en %>>EN</option>
+              <option value="es" <%= 'selected' if I18n.locale == :es %>>ES</option>
+              <option value="fr" <%= 'selected' if I18n.locale == :fr %>>FR</option>
+              <option value="de" <%= 'selected' if I18n.locale == :de %>>DE</option>
             </select>
             
             <% if user_signed_in? %>
-              <span class="text-sm text-gray-500">
+              <span class="text-xs text-gray-500 hidden xl:inline">
                 <%= current_user.name %> (<%= t("roles.#{current_user.role}") %>)
               </span>
-              <%= link_to t('navigation.settings'), edit_user_registration_path, class: "text-sm text-gray-500 hover:text-gray-900" %>
-              <%= button_to t('navigation.logout'), destroy_user_session_path, method: :delete, class: "text-sm text-gray-500 hover:text-gray-900" %>
+              <%= link_to t('navigation.settings'), edit_user_registration_path, class: "text-xs text-gray-500 hover:text-gray-900" %>
+              <%= button_to t('navigation.logout'), destroy_user_session_path, method: :delete, class: "text-xs text-gray-500 hover:text-gray-900" %>
             <% else %>
-              <%= link_to t('navigation.login'), new_user_session_path, class: "text-sm text-gray-500 hover:text-gray-900" %>
-              <%= link_to t('navigation.sign_up'), new_user_registration_path, class: "text-sm bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" %>
+              <%= link_to t('navigation.login'), new_user_session_path, class: "text-xs text-gray-500 hover:text-gray-900" %>
+              <%= link_to t('navigation.sign_up'), new_user_registration_path, class: "text-xs bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700" %>
             <% end %>
           </div>
           
