@@ -6,6 +6,7 @@ en:
     rfqs: "RFQs"
     auctions: "Auctions"
     analytics: "Analytics"
+    reports: "Reports"
     api_docs: "API Docs"
     settings: "Settings"
     logout: "Logout"

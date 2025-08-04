@@ -6,6 +6,7 @@ fr:
     rfqs: "Demandes"
     auctions: "Enchères"
     analytics: "Analytique"
+    reports: "Rapports"
     api_docs: "API Docs"
     settings: "Paramètres"
     logout: "Déconnexion"

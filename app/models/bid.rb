@@ -29,8 +29,8 @@ class Bid < ApplicationRecord
   end
 
   def broadcast_bid
-    AuctionChannel.broadcast_to(
-      auction,
+    ActionCable.server.broadcast(
+      "auction_#{auction.id}",
       {
         action: "new_bid",
         current_price: auction.current_price,

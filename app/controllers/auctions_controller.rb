@@ -29,7 +29,6 @@ class AuctionsController < ApplicationController
   end
 
   def bid
-    Rails.logger.debug "Bid params: #{params.inspect}"
     @auction = Auction.find(params[:id])
     @bid = @auction.bids.build(bid_params)
     @bid.user = current_user

@@ -32,38 +32,91 @@
               <%= link_to "Market Dojo Lite", root_path, class: "text-xl font-bold text-gray-900" %>
             </div>
             <% if user_signed_in? %>
-              <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+              <div class="hidden md:ml-6 md:flex md:space-x-8">
                 <%= link_to t('navigation.dashboard'), root_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900" %>
                 <%= link_to t('navigation.rfqs'), rfqs_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
                 <%= link_to t('navigation.auctions'), auctions_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
                 <% if current_user.buyer? %>
                   <%= link_to t('navigation.analytics'), analytics_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
-                  <%= link_to "Reports", reports_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
+                  <%= link_to t('navigation.reports'), reports_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
                 <% end %>
                 <%= link_to t('navigation.api_docs'), api_docs_path, class: "inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900" %>
               </div>
             <% end %>
           </div>
-          <div class="flex items-center">
+          
+          <!-- Desktop Menu -->
+          <div class="hidden md:flex items-center space-x-4">
             <!-- Language Switcher -->
-            <div class="mr-4">
-              <select onchange="switchLanguage(this.value)" class="text-sm border-gray-300 rounded-md">
-                <option value="en" <%= 'selected' if I18n.locale == :en %>>English</option>
-                <option value="es" <%= 'selected' if I18n.locale == :es %>>Español</option>
-                <option value="fr" <%= 'selected' if I18n.locale == :fr %>>Français</option>
-                <option value="de" <%= 'selected' if I18n.locale == :de %>>Deutsch</option>
-              </select>
-            </div>
+            <select onchange="switchLanguage(this.value)" class="text-sm border-gray-300 rounded-md">
+              <option value="en" <%= 'selected' if I18n.locale == :en %>>English</option>
+              <option value="es" <%= 'selected' if I18n.locale == :es %>>Español</option>
+              <option value="fr" <%= 'selected' if I18n.locale == :fr %>>Français</option>
+              <option value="de" <%= 'selected' if I18n.locale == :de %>>Deutsch</option>
+            </select>
             
             <% if user_signed_in? %>
-              <span class="text-sm text-gray-500 mr-4">
+              <span class="text-sm text-gray-500">
                 <%= current_user.name %> (<%= t("roles.#{current_user.role}") %>)
               </span>
-              <%= link_to t('navigation.settings'), edit_user_registration_path, class: "text-sm text-gray-500 hover:text-gray-900 mr-4" %>
+              <%= link_to t('navigation.settings'), edit_user_registration_path, class: "text-sm text-gray-500 hover:text-gray-900" %>
               <%= button_to t('navigation.logout'), destroy_user_session_path, method: :delete, class: "text-sm text-gray-500 hover:text-gray-900" %>
             <% else %>
-              <%= link_to t('navigation.login'), new_user_session_path, class: "text-sm text-gray-500 hover:text-gray-900 mr-4" %>
+              <%= link_to t('navigation.login'), new_user_session_path, class: "text-sm text-gray-500 hover:text-gray-900" %>
               <%= link_to t('navigation.sign_up'), new_user_registration_path, class: "text-sm bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" %>
+            <% end %>
+          </div>
+          
+          <!-- Mobile menu button -->
+          <div class="md:hidden flex items-center">
+            <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+              <!-- Hamburger icon -->
+              <svg class="menu-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+              <!-- Close icon -->
+              <svg class="close-icon hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="md:hidden hidden">
+        <div class="px-2 pt-2 pb-3 space-y-1 border-t border-gray-200">
+          <% if user_signed_in? %>
+            <%= link_to t('navigation.dashboard'), root_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" %>
+            <%= link_to t('navigation.rfqs'), rfqs_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" %>
+            <%= link_to t('navigation.auctions'), auctions_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" %>
+            <% if current_user.buyer? %>
+              <%= link_to t('navigation.analytics'), analytics_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" %>
+              <%= link_to t('navigation.reports'), reports_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" %>
+            <% end %>
+            <%= link_to t('navigation.api_docs'), api_docs_path, class: "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" %>
+          <% end %>
+        </div>
+        
+        <div class="pt-4 pb-3 border-t border-gray-200">
+          <div class="px-4 space-y-3">
+            <!-- Language Switcher -->
+            <select onchange="switchLanguage(this.value)" class="w-full text-sm border-gray-300 rounded-md">
+              <option value="en" <%= 'selected' if I18n.locale == :en %>>English</option>
+              <option value="es" <%= 'selected' if I18n.locale == :es %>>Español</option>
+              <option value="fr" <%= 'selected' if I18n.locale == :fr %>>Français</option>
+              <option value="de" <%= 'selected' if I18n.locale == :de %>>Deutsch</option>
+            </select>
+            
+            <% if user_signed_in? %>
+              <div class="text-sm text-gray-500">
+                <%= current_user.name %> (<%= t("roles.#{current_user.role}") %>)
+              </div>
+              <%= link_to t('navigation.settings'), edit_user_registration_path, class: "block text-sm text-gray-700 hover:text-gray-900" %>
+              <%= button_to t('navigation.logout'), destroy_user_session_path, method: :delete, class: "block w-full text-left text-sm text-gray-700 hover:text-gray-900" %>
+            <% else %>
+              <%= link_to t('navigation.login'), new_user_session_path, class: "block text-sm text-gray-700 hover:text-gray-900" %>
+              <%= link_to t('navigation.sign_up'), new_user_registration_path, class: "block text-sm bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-center" %>
             <% end %>
           </div>
         </div>
@@ -102,6 +155,22 @@
         document.body.appendChild(form);
         form.submit();
       }
+      
+      // Mobile menu toggle
+      document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = mobileMenuButton?.querySelector('.menu-icon');
+        const closeIcon = mobileMenuButton?.querySelector('.close-icon');
+        
+        if (mobileMenuButton && mobileMenu) {
+          mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            menuIcon?.classList.toggle('hidden');
+            closeIcon?.classList.toggle('hidden');
+          });
+        }
+      });
     </script>
   </body>
 </html>
