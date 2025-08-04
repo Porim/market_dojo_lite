@@ -29,6 +29,9 @@ class Bid < ApplicationRecord
   end
 
   def broadcast_bid
+    # Skip broadcasting in production as ActionCable is not available on Cloud Run
+    return if Rails.env.production?
+
     ActionCable.server.broadcast(
       "auction_#{auction.id}",
       {
