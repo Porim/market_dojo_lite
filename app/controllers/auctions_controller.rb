@@ -29,6 +29,7 @@ class AuctionsController < ApplicationController
   end
 
   def bid
+    Rails.logger.debug "Bid params: #{params.inspect}"
     @auction = Auction.find(params[:id])
     @bid = @auction.bids.build(bid_params)
     @bid.user = current_user
@@ -38,6 +39,8 @@ class AuctionsController < ApplicationController
     else
       redirect_to rfq_auction_path(@auction.rfq), alert: @bid.errors.full_messages.join(", ")
     end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to auctions_path, alert: "Auction not found."
   end
 
   private

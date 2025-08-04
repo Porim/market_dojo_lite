@@ -1,0 +1,54 @@
+de:
+  rfqs:
+    index:
+      title: "Anfragen"
+      new_rfq: "Neue Anfrage"
+      your_rfqs: "Ihre Anfragen"
+      available_rfqs: "Verfügbare Anfragen"
+      no_rfqs: "Keine Anfragen gefunden"
+      table:
+        title: "Titel"
+        company: "Unternehmen"
+        status: "Status"
+        deadline: "Frist"
+        quotes: "Angebote"
+        actions: "Aktionen"
+      
+    show:
+      by: "von"
+      description: "Beschreibung"
+      deadline: "Frist"
+      attachments: "Anhänge"
+      quotes: "Angebote"
+      no_quotes: "Noch keine Angebote eingereicht."
+      submit_quote: "Angebot abgeben"
+      start_auction: "Auktion starten"
+      active_auction: "Aktive Auktion"
+      current_price: "Aktueller Preis"
+      time_remaining: "Verbleibende Zeit"
+      view_auction: "Auktion anzeigen"
+      
+    new:
+      title: "Neue Anfrage erstellen"
+      
+    edit:
+      title: "Anfrage bearbeiten"
+      current_attachments: "Aktuelle Anhänge"
+      add_attachments: "Weitere Anhänge hinzufügen"
+      
+    form:
+      title_label: "Titel"
+      description_label: "Beschreibung"
+      deadline_label: "Frist"
+      status_label: "Status"
+      attachments_label: "Anhänge"
+      upload_files: "Dateien hochladen"
+      drag_drop: "oder per Drag & Drop"
+      file_types: "PDF, DOC, DOCX, XLS, XLSX bis zu 10MB pro Datei"
+      selected_files: "Ausgewählte Dateien:"
+      
+    messages:
+      created: "Die Anfrage wurde erfolgreich erstellt."
+      updated: "Die Anfrage wurde erfolgreich aktualisiert."
+      destroyed: "Die Anfrage wurde erfolgreich gelöscht."
+      access_denied: "Zugriff verweigert. Nur Käufer können diese Aktion ausführen."

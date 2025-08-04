@@ -1,0 +1,33 @@
+fr:
+  auctions:
+    index:
+      title: "Toutes les Enchères"
+      by: "Par"
+      current_price: "Prix Actuel"
+      bids: "Offres"
+      ends_in: "Se termine dans"
+      status: "Statut"
+      view_auction: "Voir l'Enchère"
+      no_auctions: "Aucune enchère disponible pour le moment."
+      
+    show:
+      title: "Enchère"
+      current_lowest_price: "Prix le Plus Bas Actuel"
+      time_remaining: "Temps Restant"
+      status: "Statut"
+      ended: "Terminée"
+      place_your_bid: "Placer votre Offre"
+      bid_amount: "Montant de l'Offre (£)"
+      bid_placeholder: "Doit être inférieur au prix actuel"
+      place_bid: "Placer l'Offre"
+      bid_history: "Historique des Offres"
+      leading: "En Tête"
+      no_bids: "Aucune offre placée pour le moment."
+      no_auction: "Aucune enchère n'a encore été créée pour cette demande."
+      back_to_rfq: "Retour à la Demande"
+      ends: "Se termine"
+      
+      table:
+        supplier: "Fournisseur"
+        bid_amount: "Montant de l'Offre"
+        time: "Heure"

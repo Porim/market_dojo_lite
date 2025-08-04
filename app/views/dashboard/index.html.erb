@@ -4,25 +4,25 @@
     <div class="space-y-6">
       <!-- Header with Stats -->
       <div class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg shadow-lg p-8 text-white">
-        <h1 class="text-3xl font-bold mb-2">Welcome back, <%= current_user.name %>!</h1>
-        <p class="text-blue-100 mb-6">Here's your procurement overview</p>
+        <h1 class="text-3xl font-bold mb-2"><%= t('dashboard.buyer.welcome', name: current_user.name) %></h1>
+        <p class="text-blue-100 mb-6"><%= t('dashboard.buyer.overview') %></p>
         
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div class="bg-white/10 backdrop-blur rounded-lg p-4">
             <div class="text-3xl font-bold"><%= @rfqs.count %></div>
-            <div class="text-sm text-blue-100">Total RFQs</div>
+            <div class="text-sm text-blue-100"><%= t('dashboard.buyer.stats.total_rfqs') %></div>
           </div>
           <div class="bg-white/10 backdrop-blur rounded-lg p-4">
             <div class="text-3xl font-bold"><%= @rfqs.active.count %></div>
-            <div class="text-sm text-blue-100">Active RFQs</div>
+            <div class="text-sm text-blue-100"><%= t('dashboard.buyer.stats.active_rfqs') %></div>
           </div>
           <div class="bg-white/10 backdrop-blur rounded-lg p-4">
             <div class="text-3xl font-bold"><%= @rfqs.map(&:quotes).flatten.count %></div>
-            <div class="text-sm text-blue-100">Quotes Received</div>
+            <div class="text-sm text-blue-100"><%= t('dashboard.buyer.stats.quotes_received') %></div>
           </div>
           <div class="bg-white/10 backdrop-blur rounded-lg p-4">
             <div class="text-3xl font-bold"><%= @active_auctions.count %></div>
-            <div class="text-sm text-blue-100">Live Auctions</div>
+            <div class="text-sm text-blue-100"><%= t('dashboard.buyer.stats.live_auctions') %></div>
           </div>
         </div>
       </div>
@@ -37,8 +37,8 @@
               </svg>
             </div>
             <div>
-              <h3 class="font-semibold text-gray-900">Create New RFQ</h3>
-              <p class="text-sm text-gray-600">Start a new procurement request</p>
+              <h3 class="font-semibold text-gray-900"><%= t('dashboard.buyer.quick_actions.create_rfq.title') %></h3>
+              <p class="text-sm text-gray-600"><%= t('dashboard.buyer.quick_actions.create_rfq.description') %></p>
             </div>
           </div>
         <% end %>
@@ -51,8 +51,8 @@
               </svg>
             </div>
             <div>
-              <h3 class="font-semibold text-gray-900">View All RFQs</h3>
-              <p class="text-sm text-gray-600">Manage your requests</p>
+              <h3 class="font-semibold text-gray-900"><%= t('dashboard.buyer.quick_actions.view_rfqs.title') %></h3>
+              <p class="text-sm text-gray-600"><%= t('dashboard.buyer.quick_actions.view_rfqs.description') %></p>
             </div>
           </div>
         <% end %>
@@ -65,8 +65,8 @@
               </svg>
             </div>
             <div>
-              <h3 class="font-semibold text-gray-900">View Analytics</h3>
-              <p class="text-sm text-gray-600">Track your performance</p>
+              <h3 class="font-semibold text-gray-900"><%= t('dashboard.buyer.quick_actions.analytics.title') %></h3>
+              <p class="text-sm text-gray-600"><%= t('dashboard.buyer.quick_actions.analytics.description') %></p>
             </div>
           </div>
         <% end %>
@@ -76,8 +76,8 @@
         <!-- Recent RFQs -->
         <div class="bg-white rounded-lg shadow-md">
           <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-            <h2 class="text-lg font-semibold text-gray-900">Recent RFQs</h2>
-            <%= link_to "View All", rfqs_path, class: "text-sm text-blue-600 hover:text-blue-800" %>
+            <h2 class="text-lg font-semibold text-gray-900"><%= t('dashboard.buyer.sections.recent_rfqs') %></h2>
+            <%= link_to t('dashboard.buyer.sections.view_all'), rfqs_path, class: "text-sm text-blue-600 hover:text-blue-800" %>
           </div>
           <div class="p-6">
             <% if @rfqs.any? %>
@@ -96,12 +96,12 @@
                         <%= link_to rfq.title, rfq_path(rfq), class: "hover:text-blue-600" %>
                       </p>
                       <p class="text-sm text-gray-500">
-                        <%= rfq.quotes.count %> quotes • Due <%= rfq.deadline.strftime("%b %d") %>
+                        <%= t('dashboard.buyer.recent_rfqs.quotes_due', count: rfq.quotes.count, date: rfq.deadline.strftime("%b %d")) %>
                       </p>
                     </div>
                     <div class="flex-shrink-0">
                       <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= rfq.active? ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' %>">
-                        <%= rfq.status.capitalize %>
+                        <%= t("common.status.#{rfq.status}", default: rfq.status.capitalize) %>
                       </span>
                     </div>
                   </div>
@@ -112,8 +112,8 @@
                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                 </svg>
-                <p class="mt-2 text-sm text-gray-500">No RFQs created yet</p>
-                <%= link_to "Create your first RFQ", new_rfq_path, class: "mt-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" %>
+                <p class="mt-2 text-sm text-gray-500"><%= t('dashboard.buyer.recent_rfqs.no_rfqs') %></p>
+                <%= link_to t('dashboard.buyer.recent_rfqs.create_first'), new_rfq_path, class: "mt-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" %>
               </div>
             <% end %>
           </div>
@@ -122,8 +122,8 @@
         <!-- Active Auctions -->
         <div class="bg-white rounded-lg shadow-md">
           <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-            <h2 class="text-lg font-semibold text-gray-900">Active Auctions</h2>
-            <%= link_to "View All", auctions_path, class: "text-sm text-blue-600 hover:text-blue-800" %>
+            <h2 class="text-lg font-semibold text-gray-900"><%= t('dashboard.buyer.sections.active_auctions') %></h2>
+            <%= link_to t('dashboard.buyer.sections.view_all'), auctions_path, class: "text-sm text-blue-600 hover:text-blue-800" %>
           </div>
           <div class="p-6">
             <% if @active_auctions.any? %>
@@ -135,16 +135,16 @@
                         <%= link_to auction.rfq.title, rfq_auction_path(auction.rfq), class: "hover:text-blue-600" %>
                       </h3>
                       <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                        Live
+                        <%= t('dashboard.buyer.auctions.live') %>
                       </span>
                     </div>
                     <div class="grid grid-cols-2 gap-2 text-sm">
                       <div>
-                        <span class="text-gray-500">Current Price:</span>
+                        <span class="text-gray-500"><%= t('dashboard.buyer.auctions.current_price') %></span>
                         <span class="font-semibold text-green-600">£<%= number_with_delimiter(auction.current_price || 0) %></span>
                       </div>
                       <div>
-                        <span class="text-gray-500">Time Left:</span>
+                        <span class="text-gray-500"><%= t('dashboard.buyer.auctions.time_left') %></span>
                         <span class="font-semibold text-red-600"><%= distance_of_time_in_words(Time.current, auction.end_time) %></span>
                       </div>
                     </div>
@@ -156,7 +156,7 @@
                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <p class="mt-2 text-sm text-gray-500">No active auctions</p>
+                <p class="mt-2 text-sm text-gray-500"><%= t('dashboard.buyer.auctions.no_auctions') %></p>
               </div>
             <% end %>
           </div>
@@ -169,25 +169,25 @@
     <div class="space-y-6">
       <!-- Header with Stats -->
       <div class="bg-gradient-to-r from-green-600 to-green-800 rounded-lg shadow-lg p-8 text-white">
-        <h1 class="text-3xl font-bold mb-2">Welcome back, <%= current_user.name %>!</h1>
-        <p class="text-green-100 mb-6">Here's your supplier overview</p>
+        <h1 class="text-3xl font-bold mb-2"><%= t('dashboard.supplier.welcome', name: current_user.name) %></h1>
+        <p class="text-green-100 mb-6"><%= t('dashboard.supplier.overview') %></p>
         
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div class="bg-white/10 backdrop-blur rounded-lg p-4">
             <div class="text-3xl font-bold"><%= @active_rfqs.count %></div>
-            <div class="text-sm text-green-100">Open RFQs</div>
+            <div class="text-sm text-green-100"><%= t('dashboard.supplier.stats.open_rfqs') %></div>
           </div>
           <div class="bg-white/10 backdrop-blur rounded-lg p-4">
             <div class="text-3xl font-bold"><%= @my_quotes.count %></div>
-            <div class="text-sm text-green-100">Quotes Submitted</div>
+            <div class="text-sm text-green-100"><%= t('dashboard.supplier.stats.quotes_submitted') %></div>
           </div>
           <div class="bg-white/10 backdrop-blur rounded-lg p-4">
             <div class="text-3xl font-bold"><%= @my_quotes.where(status: 'accepted').count %></div>
-            <div class="text-sm text-green-100">Won Quotes</div>
+            <div class="text-sm text-green-100"><%= t('dashboard.supplier.stats.won_quotes') %></div>
           </div>
           <div class="bg-white/10 backdrop-blur rounded-lg p-4">
             <div class="text-3xl font-bold"><%= @active_auctions.count %></div>
-            <div class="text-sm text-green-100">Live Auctions</div>
+            <div class="text-sm text-green-100"><%= t('dashboard.supplier.stats.live_auctions') %></div>
           </div>
         </div>
       </div>
@@ -202,8 +202,8 @@
               </svg>
             </div>
             <div>
-              <h3 class="font-semibold text-gray-900">Browse RFQs</h3>
-              <p class="text-sm text-gray-600">Find new opportunities</p>
+              <h3 class="font-semibold text-gray-900"><%= t('dashboard.supplier.quick_actions.browse_rfqs.title') %></h3>
+              <p class="text-sm text-gray-600"><%= t('dashboard.supplier.quick_actions.browse_rfqs.description') %></p>
             </div>
           </div>
         <% end %>
@@ -216,8 +216,8 @@
               </svg>
             </div>
             <div>
-              <h3 class="font-semibold text-gray-900">Live Auctions</h3>
-              <p class="text-sm text-gray-600">Join active bidding</p>
+              <h3 class="font-semibold text-gray-900"><%= t('dashboard.supplier.quick_actions.live_auctions.title') %></h3>
+              <p class="text-sm text-gray-600"><%= t('dashboard.supplier.quick_actions.live_auctions.description') %></p>
             </div>
           </div>
         <% end %>
@@ -230,8 +230,8 @@
               </svg>
             </div>
             <div>
-              <h3 class="font-semibold text-gray-900">Performance Reports</h3>
-              <p class="text-sm text-gray-600">Track your success</p>
+              <h3 class="font-semibold text-gray-900"><%= t('dashboard.supplier.quick_actions.reports.title') %></h3>
+              <p class="text-sm text-gray-600"><%= t('dashboard.supplier.quick_actions.reports.description') %></p>
             </div>
           </div>
         <% end %>
@@ -241,8 +241,8 @@
         <!-- Available RFQs -->
         <div class="bg-white rounded-lg shadow-md">
           <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-            <h2 class="text-lg font-semibold text-gray-900">New Opportunities</h2>
-            <%= link_to "View All", rfqs_path, class: "text-sm text-blue-600 hover:text-blue-800" %>
+            <h2 class="text-lg font-semibold text-gray-900"><%= t('dashboard.supplier.sections.new_opportunities') %></h2>
+            <%= link_to t('dashboard.supplier.sections.view_all'), rfqs_path, class: "text-sm text-blue-600 hover:text-blue-800" %>
           </div>
           <div class="p-6">
             <% if @active_rfqs.any? %>
@@ -255,19 +255,19 @@
                       </h3>
                       <% if rfq.quotes.where(user: current_user).none? %>
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                          New
+                          <%= t('dashboard.supplier.opportunities.new') %>
                         </span>
                       <% else %>
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                          Quoted
+                          <%= t('dashboard.supplier.opportunities.quoted') %>
                         </span>
                       <% end %>
                     </div>
                     <p class="text-sm text-gray-600 mb-3"><%= rfq.user.company_name %></p>
                     <div class="flex justify-between items-center">
-                      <span class="text-sm text-gray-500">Due <%= rfq.deadline.strftime("%b %d") %></span>
+                      <span class="text-sm text-gray-500"><%= t('dashboard.supplier.opportunities.due', date: rfq.deadline.strftime("%b %d")) %></span>
                       <% if rfq.quotes.where(user: current_user).none? %>
-                        <%= link_to "Submit Quote", new_rfq_quote_path(rfq), class: "text-sm font-medium text-blue-600 hover:text-blue-800" %>
+                        <%= link_to t('dashboard.supplier.opportunities.submit_quote'), new_rfq_quote_path(rfq), class: "text-sm font-medium text-blue-600 hover:text-blue-800" %>
                       <% end %>
                     </div>
                   </div>
@@ -278,7 +278,7 @@
                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                 </svg>
-                <p class="mt-2 text-sm text-gray-500">No active RFQs available</p>
+                <p class="mt-2 text-sm text-gray-500"><%= t('dashboard.supplier.opportunities.no_active_rfqs') %></p>
               </div>
             <% end %>
           </div>
@@ -287,8 +287,8 @@
         <!-- My Recent Quotes -->
         <div class="bg-white rounded-lg shadow-md">
           <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-            <h2 class="text-lg font-semibold text-gray-900">My Recent Quotes</h2>
-            <%= link_to "View All", rfqs_path, class: "text-sm text-blue-600 hover:text-blue-800" %>
+            <h2 class="text-lg font-semibold text-gray-900"><%= t('dashboard.supplier.sections.my_recent_quotes') %></h2>
+            <%= link_to t('dashboard.supplier.sections.view_all'), rfqs_path, class: "text-sm text-blue-600 hover:text-blue-800" %>
           </div>
           <div class="p-6">
             <% if @my_quotes.any? %>
@@ -310,7 +310,7 @@
                     </div>
                     <div class="flex-shrink-0">
                       <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                        <%= quote.status || 'Pending' %>
+                        <%= quote.status || t('dashboard.supplier.quotes.pending') %>
                       </span>
                     </div>
                   </div>
@@ -321,7 +321,7 @@
                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                 </svg>
-                <p class="mt-2 text-sm text-gray-500">No quotes submitted yet</p>
+                <p class="mt-2 text-sm text-gray-500"><%= t('dashboard.supplier.quotes.no_quotes') %></p>
               </div>
             <% end %>
           </div>
@@ -331,7 +331,7 @@
       <!-- Active Auctions Full Width -->
       <div class="bg-white rounded-lg shadow-md">
         <div class="px-6 py-4 border-b border-gray-200">
-          <h2 class="text-lg font-semibold text-gray-900">Live Auctions</h2>
+          <h2 class="text-lg font-semibold text-gray-900"><%= t('dashboard.supplier.sections.live_auctions') %></h2>
         </div>
         <div class="p-6">
           <% if @active_auctions.any? %>
@@ -343,20 +343,20 @@
                       <%= auction.rfq.title %>
                     </h3>
                     <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                      Live
+                      <%= t('dashboard.supplier.auctions.live') %>
                     </span>
                   </div>
                   <div class="space-y-2 mb-3">
                     <div class="flex justify-between text-sm">
-                      <span class="text-gray-500">Current Price:</span>
+                      <span class="text-gray-500"><%= t('dashboard.supplier.auctions.current_price') %></span>
                       <span class="font-semibold text-green-600">£<%= number_with_delimiter(auction.current_price || 0) %></span>
                     </div>
                     <div class="flex justify-between text-sm">
-                      <span class="text-gray-500">Time Left:</span>
+                      <span class="text-gray-500"><%= t('dashboard.supplier.auctions.time_left') %></span>
                       <span class="font-semibold text-red-600"><%= distance_of_time_in_words(Time.current, auction.end_time) %></span>
                     </div>
                   </div>
-                  <%= link_to "Join Auction", rfq_auction_path(auction.rfq), class: "w-full bg-green-600 text-white text-sm px-4 py-2 rounded-md hover:bg-green-700 text-center block" %>
+                  <%= link_to t('dashboard.supplier.auctions.join_auction'), rfq_auction_path(auction.rfq), class: "w-full bg-green-600 text-white text-sm px-4 py-2 rounded-md hover:bg-green-700 text-center block" %>
                 </div>
               <% end %>
             </div>
@@ -365,7 +365,7 @@
               <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
-              <p class="mt-2 text-sm text-gray-500">No active auctions at the moment</p>
+              <p class="mt-2 text-sm text-gray-500"><%= t('dashboard.supplier.auctions.no_auctions') %></p>
             </div>
           <% end %>
         </div>
@@ -379,10 +379,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div class="text-center">
         <h1 class="text-5xl font-extrabold text-gray-900 mb-6">
-          Welcome to Market Dojo Lite
+          <%= t('dashboard.landing.hero.title') %>
         </h1>
         <p class="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-          The simplified eProcurement platform that connects buyers with suppliers, streamlines RFQ processes, and enables competitive reverse auctions.
+          <%= t('dashboard.landing.hero.subtitle') %>
         </p>
       </div>
 
@@ -393,35 +393,35 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
             </svg>
           </div>
-          <h2 class="text-2xl font-bold mb-4 text-gray-900">For Buyers</h2>
+          <h2 class="text-2xl font-bold mb-4 text-gray-900"><%= t('dashboard.landing.buyers.title') %></h2>
           <ul class="space-y-3 mb-6">
             <li class="flex items-start">
               <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-              <span class="text-gray-700">Create and manage RFQs efficiently</span>
+              <span class="text-gray-700"><%= t('dashboard.landing.buyers.features.rfq_management') %></span>
             </li>
             <li class="flex items-start">
               <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-              <span class="text-gray-700">Run competitive reverse auctions</span>
+              <span class="text-gray-700"><%= t('dashboard.landing.buyers.features.reverse_auctions') %></span>
             </li>
             <li class="flex items-start">
               <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-              <span class="text-gray-700">Compare quotes side-by-side</span>
+              <span class="text-gray-700"><%= t('dashboard.landing.buyers.features.quote_comparison') %></span>
             </li>
             <li class="flex items-start">
               <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-              <span class="text-gray-700">Track savings and analytics</span>
+              <span class="text-gray-700"><%= t('dashboard.landing.buyers.features.analytics') %></span>
             </li>
           </ul>
           <%= link_to new_user_registration_path(role: 'buyer'), class: "w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 inline-block text-center font-semibold transition-colors" do %>
-            Sign Up as Buyer
+            <%= t('dashboard.landing.buyers.sign_up') %>
           <% end %>
         </div>
         
@@ -431,47 +431,47 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
             </svg>
           </div>
-          <h2 class="text-2xl font-bold mb-4 text-gray-900">For Suppliers</h2>
+          <h2 class="text-2xl font-bold mb-4 text-gray-900"><%= t('dashboard.landing.suppliers.title') %></h2>
           <ul class="space-y-3 mb-6">
             <li class="flex items-start">
               <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-              <span class="text-gray-700">Access new business opportunities</span>
+              <span class="text-gray-700"><%= t('dashboard.landing.suppliers.features.opportunities') %></span>
             </li>
             <li class="flex items-start">
               <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-              <span class="text-gray-700">Submit competitive quotes</span>
+              <span class="text-gray-700"><%= t('dashboard.landing.suppliers.features.quotes') %></span>
             </li>
             <li class="flex items-start">
               <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-              <span class="text-gray-700">Participate in real-time auctions</span>
+              <span class="text-gray-700"><%= t('dashboard.landing.suppliers.features.auctions') %></span>
             </li>
             <li class="flex items-start">
               <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
-              <span class="text-gray-700">Track performance metrics</span>
+              <span class="text-gray-700"><%= t('dashboard.landing.suppliers.features.metrics') %></span>
             </li>
           </ul>
           <%= link_to new_user_registration_path(role: 'supplier'), class: "w-full bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 inline-block text-center font-semibold transition-colors" do %>
-            Sign Up as Supplier
+            <%= t('dashboard.landing.suppliers.sign_up') %>
           <% end %>
         </div>
       </div>
 
       <div class="text-center mb-12">
-        <p class="text-gray-600 mb-4">Already have an account?</p>
-        <%= link_to "Sign In", new_user_session_path, class: "inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+        <p class="text-gray-600 mb-4"><%= t('dashboard.landing.login.already_account') %></p>
+        <%= link_to t('dashboard.landing.login.sign_in'), new_user_session_path, class: "inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
       </div>
 
       <!-- Features Section -->
       <div class="bg-gray-100 rounded-2xl p-12 max-w-6xl mx-auto">
-        <h2 class="text-3xl font-bold text-center mb-12 text-gray-900">Platform Features</h2>
+        <h2 class="text-3xl font-bold text-center mb-12 text-gray-900"><%= t('dashboard.landing.features.title') %></h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div class="text-center">
             <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
@@ -479,8 +479,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
             </div>
-            <h3 class="text-lg font-semibold mb-2">Easy to Use</h3>
-            <p class="text-gray-600">Intuitive interface designed for quick adoption and minimal training</p>
+            <h3 class="text-lg font-semibold mb-2"><%= t('dashboard.landing.features.easy_to_use.title') %></h3>
+            <p class="text-gray-600"><%= t('dashboard.landing.features.easy_to_use.description') %></p>
           </div>
           <div class="text-center">
             <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
@@ -488,8 +488,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
               </svg>
             </div>
-            <h3 class="text-lg font-semibold mb-2">Secure & Reliable</h3>
-            <p class="text-gray-600">Enterprise-grade security with reliable cloud infrastructure</p>
+            <h3 class="text-lg font-semibold mb-2"><%= t('dashboard.landing.features.secure.title') %></h3>
+            <p class="text-gray-600"><%= t('dashboard.landing.features.secure.description') %></p>
           </div>
           <div class="text-center">
             <div class="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
@@ -497,8 +497,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
               </svg>
             </div>
-            <h3 class="text-lg font-semibold mb-2">Real-time Updates</h3>
-            <p class="text-gray-600">Live notifications and instant updates for auctions and quotes</p>
+            <h3 class="text-lg font-semibold mb-2"><%= t('dashboard.landing.features.real_time.title') %></h3>
+            <p class="text-gray-600"><%= t('dashboard.landing.features.real_time.description') %></p>
           </div>
         </div>
       </div>

@@ -26,7 +26,7 @@
 
       <% if @rfq.documents.attached? %>
         <div>
-          <h3 class="text-sm font-medium text-gray-700">Attachments</h3>
+          <h3 class="text-sm font-medium text-gray-700"><%= t('rfqs.show.attachments') %></h3>
           <div class="mt-2 space-y-2">
             <% @rfq.documents.each do |document| %>
               <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -39,7 +39,7 @@
                     <p class="text-xs text-gray-500"><%= number_to_human_size(document.byte_size) %></p>
                   </div>
                 </div>
-                <%= link_to "Download", document_path(document.signed_id, disposition: "attachment"), 
+                <%= link_to t('common.actions.download'), document_path(document.signed_id, disposition: "attachment"), 
                     class: "text-sm text-blue-600 hover:text-blue-500" %>
               </div>
             <% end %>
@@ -50,9 +50,9 @@
 
     <% if current_user.buyer? && @rfq.user == current_user %>
       <div class="mt-6 flex space-x-3">
-        <%= link_to "Edit", edit_rfq_path(@rfq), class: "px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" %>
+        <%= link_to t('common.actions.edit'), edit_rfq_path(@rfq), class: "px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" %>
         <% if @rfq.status == 'published' && @rfq.auction.nil? %>
-          <%= button_to "Start Auction", rfq_auction_path(@rfq), method: :post, 
+          <%= button_to t('rfqs.show.start_auction'), rfq_auction_path(@rfq), method: :post, 
               params: { auction: { start_time: Time.current, end_time: @rfq.deadline, current_price: @quotes.first&.price } },
               class: "px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700" %>
         <% end %>
@@ -60,7 +60,7 @@
     <% elsif current_user.supplier? && @rfq.status == 'published' %>
       <% if @rfq.quotes.where(user: current_user).none? %>
         <div class="mt-6">
-          <%= link_to "Submit Quote", new_rfq_quote_path(@rfq), class: "px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700" %>
+          <%= link_to t('rfqs.show.submit_quote'), new_rfq_quote_path(@rfq), class: "px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700" %>
         </div>
       <% end %>
     <% end %>
@@ -68,32 +68,32 @@
 
   <% if @auction %>
     <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-      <h2 class="text-xl font-semibold mb-2">Active Auction</h2>
+      <h2 class="text-xl font-semibold mb-2"><%= t('rfqs.show.active_auction') %></h2>
       <p class="text-gray-600">
-        Current Price: £<%= @auction.current_price || "N/A" %> | 
-        Status: <%= @auction.status.capitalize %> |
+        <%= t('rfqs.show.current_price') %>: £<%= @auction.current_price || "N/A" %> | 
+        <%= t('common.status.status') %>: <%= @auction.status.capitalize %> |
         <% if @auction.active? %>
-          Time Remaining: <%= distance_of_time_in_words(Time.current, @auction.end_time) %>
+          <%= t('rfqs.show.time_remaining') %>: <%= distance_of_time_in_words(Time.current, @auction.end_time) %>
         <% else %>
-          Ends: <%= @auction.end_time.strftime("%B %d at %I:%M %p") %>
+          <%= t('auctions.show.ends') %>: <%= @auction.end_time.strftime("%B %d at %I:%M %p") %>
         <% end %>
       </p>
-      <%= link_to "View Auction", rfq_auction_path(@rfq), class: "mt-3 inline-block px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700" %>
+      <%= link_to t('rfqs.show.view_auction'), rfq_auction_path(@rfq), class: "mt-3 inline-block px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700" %>
     </div>
   <% end %>
 
   <div class="bg-white shadow rounded-lg p-6">
-    <h2 class="text-xl font-semibold mb-4">Quotes (<%= @quotes.count %>)</h2>
+    <h2 class="text-xl font-semibold mb-4"><%= t('rfqs.show.quotes') %> (<%= @quotes.count %>)</h2>
     
     <% if @quotes.any? %>
       <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Supplier</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Notes</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Submitted</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t('quotes.table.supplier') %></th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t('quotes.table.price') %></th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t('quotes.table.notes') %></th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t('quotes.table.submitted') %></th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
@@ -117,7 +117,7 @@
         </table>
       </div>
     <% else %>
-      <p class="text-gray-500">No quotes submitted yet.</p>
+      <p class="text-gray-500"><%= t('rfqs.show.no_quotes') %></p>
     <% end %>
   </div>
 </div>

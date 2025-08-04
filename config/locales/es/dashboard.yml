@@ -1,0 +1,107 @@
+es:
+  dashboard:
+    buyer:
+      welcome: "¡Bienvenido de vuelta, %{name}!"
+      overview: "Aquí está tu resumen de adquisiciones"
+      stats:
+        total_rfqs: "Solicitudes Totales"
+        active_rfqs: "Solicitudes Activas"
+        quotes_received: "Cotizaciones Recibidas"
+        live_auctions: "Subastas en Vivo"
+      quick_actions:
+        create_rfq:
+          title: "Crear Nueva Solicitud"
+          description: "Iniciar una nueva solicitud de adquisición"
+        view_rfqs:
+          title: "Ver Todas las Solicitudes"
+          description: "Gestionar tus solicitudes"
+        analytics:
+          title: "Ver Análisis"
+          description: "Rastrear tu rendimiento"
+      sections:
+        recent_rfqs: "Solicitudes Recientes"
+        active_auctions: "Subastas Activas"
+        view_all: "Ver Todas"
+      recent_rfqs:
+        quotes_due: "%{count} cotizaciones • Vence el %{date}"
+        no_rfqs: "Aún no se han creado solicitudes"
+        create_first: "Crea tu primera solicitud"
+      auctions:
+        current_price: "Precio Actual:"
+        time_left: "Tiempo Restante:"
+        live: "En Vivo"
+        no_auctions: "No hay subastas activas"
+    
+    supplier:
+      welcome: "¡Bienvenido de vuelta, %{name}!"
+      overview: "Aquí está tu resumen de proveedor"
+      stats:
+        open_rfqs: "Solicitudes Abiertas"
+        quotes_submitted: "Cotizaciones Enviadas"
+        won_quotes: "Cotizaciones Ganadas"
+        live_auctions: "Subastas en Vivo"
+      quick_actions:
+        browse_rfqs:
+          title: "Explorar Solicitudes"
+          description: "Encontrar nuevas oportunidades"
+        live_auctions:
+          title: "Subastas en Vivo"
+          description: "Unirse a ofertas activas"
+        reports:
+          title: "Informes de Rendimiento"
+          description: "Rastrear tu éxito"
+      sections:
+        new_opportunities: "Nuevas Oportunidades"
+        my_recent_quotes: "Mis Cotizaciones Recientes"
+        live_auctions: "Subastas en Vivo"
+        view_all: "Ver Todas"
+      opportunities:
+        new: "Nueva"
+        quoted: "Cotizada"
+        due: "Vence el %{date}"
+        submit_quote: "Enviar Cotización"
+        no_active_rfqs: "No hay solicitudes activas disponibles"
+      quotes:
+        pending: "Pendiente"
+        no_quotes: "Aún no se han enviado cotizaciones"
+      auctions:
+        current_price: "Precio Actual:"
+        time_left: "Tiempo Restante:"
+        live: "En Vivo"
+        join_auction: "Unirse a la Subasta"
+        no_auctions: "No hay subastas activas en este momento"
+    
+    landing:
+      hero:
+        title: "Bienvenido a Market Dojo Lite"
+        subtitle: "La plataforma de eProcurement simplificada que conecta compradores con proveedores, agiliza los procesos de RFQ y permite subastas inversas competitivas."
+      buyers:
+        title: "Para Compradores"
+        features:
+          rfq_management: "Crear y gestionar solicitudes de manera eficiente"
+          reverse_auctions: "Ejecutar subastas inversas competitivas"
+          quote_comparison: "Comparar cotizaciones lado a lado"
+          analytics: "Rastrear ahorros y análisis"
+        sign_up: "Registrarse como Comprador"
+      suppliers:
+        title: "Para Proveedores"
+        features:
+          opportunities: "Acceder a nuevas oportunidades de negocio"
+          quotes: "Enviar cotizaciones competitivas"
+          auctions: "Participar en subastas en tiempo real"
+          metrics: "Rastrear métricas de rendimiento"
+        sign_up: "Registrarse como Proveedor"
+      login:
+        already_account: "¿Ya tienes una cuenta?"
+        sign_in: "Iniciar Sesión"
+      features:
+        title: "Características de la Plataforma"
+        easy_to_use:
+          title: "Fácil de Usar"
+          description: "Interfaz intuitiva diseñada para adopción rápida y entrenamiento mínimo"
+        secure:
+          title: "Seguro y Confiable"
+          description: "Seguridad de nivel empresarial con infraestructura de nube confiable"
+        real_time:
+          title: "Actualizaciones en Tiempo Real"
+          description: "Notificaciones en vivo y actualizaciones instantáneas para subastas y cotizaciones"

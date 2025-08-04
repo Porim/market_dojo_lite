@@ -1,0 +1,107 @@
+fr:
+  dashboard:
+    buyer:
+      welcome: "Bon retour, %{name} !"
+      overview: "Voici votre aperçu des achats"
+      stats:
+        total_rfqs: "Demandes Totales"
+        active_rfqs: "Demandes Actives"
+        quotes_received: "Devis Reçus"
+        live_auctions: "Enchères en Direct"
+      quick_actions:
+        create_rfq:
+          title: "Créer une Nouvelle Demande"
+          description: "Démarrer une nouvelle demande d'achat"
+        view_rfqs:
+          title: "Voir Toutes les Demandes"
+          description: "Gérer vos demandes"
+        analytics:
+          title: "Voir les Analyses"
+          description: "Suivre vos performances"
+      sections:
+        recent_rfqs: "Demandes Récentes"
+        active_auctions: "Enchères Actives"
+        view_all: "Voir Tout"
+      recent_rfqs:
+        quotes_due: "%{count} devis • Échéance le %{date}"
+        no_rfqs: "Aucune demande créée pour le moment"
+        create_first: "Créez votre première demande"
+      auctions:
+        current_price: "Prix Actuel :"
+        time_left: "Temps Restant :"
+        live: "En Direct"
+        no_auctions: "Aucune enchère active"
+    
+    supplier:
+      welcome: "Bon retour, %{name} !"
+      overview: "Voici votre aperçu fournisseur"
+      stats:
+        open_rfqs: "Demandes Ouvertes"
+        quotes_submitted: "Devis Soumis"
+        won_quotes: "Devis Gagnés"
+        live_auctions: "Enchères en Direct"
+      quick_actions:
+        browse_rfqs:
+          title: "Parcourir les Demandes"
+          description: "Trouver de nouvelles opportunités"
+        live_auctions:
+          title: "Enchères en Direct"
+          description: "Rejoindre les enchères actives"
+        reports:
+          title: "Rapports de Performance"
+          description: "Suivre votre succès"
+      sections:
+        new_opportunities: "Nouvelles Opportunités"
+        my_recent_quotes: "Mes Devis Récents"
+        live_auctions: "Enchères en Direct"
+        view_all: "Voir Tout"
+      opportunities:
+        new: "Nouveau"
+        quoted: "Devis Soumis"
+        due: "Échéance le %{date}"
+        submit_quote: "Soumettre un Devis"
+        no_active_rfqs: "Aucune demande active disponible"
+      quotes:
+        pending: "En Attente"
+        no_quotes: "Aucun devis soumis pour le moment"
+      auctions:
+        current_price: "Prix Actuel :"
+        time_left: "Temps Restant :"
+        live: "En Direct"
+        join_auction: "Rejoindre l'Enchère"
+        no_auctions: "Aucune enchère active pour le moment"
+    
+    landing:
+      hero:
+        title: "Bienvenue sur Market Dojo Lite"
+        subtitle: "La plateforme eProcurement simplifiée qui connecte les acheteurs aux fournisseurs, rationalise les processus RFQ et permet des enchères inversées compétitives."
+      buyers:
+        title: "Pour les Acheteurs"
+        features:
+          rfq_management: "Créer et gérer efficacement les demandes"
+          reverse_auctions: "Organiser des enchères inversées compétitives"
+          quote_comparison: "Comparer les devis côte à côte"
+          analytics: "Suivre les économies et les analyses"
+        sign_up: "S'inscrire comme Acheteur"
+      suppliers:
+        title: "Pour les Fournisseurs"
+        features:
+          opportunities: "Accéder à de nouvelles opportunités d'affaires"
+          quotes: "Soumettre des devis compétitifs"
+          auctions: "Participer aux enchères en temps réel"
+          metrics: "Suivre les métriques de performance"
+        sign_up: "S'inscrire comme Fournisseur"
+      login:
+        already_account: "Vous avez déjà un compte ?"
+        sign_in: "Se Connecter"
+      features:
+        title: "Fonctionnalités de la Plateforme"
+        easy_to_use:
+          title: "Facile à Utiliser"
+          description: "Interface intuitive conçue pour une adoption rapide et une formation minimale"
+        secure:
+          title: "Sécurisé et Fiable"
+          description: "Sécurité de niveau entreprise avec une infrastructure cloud fiable"
+        real_time:
+          title: "Mises à Jour en Temps Réel"
+          description: "Notifications en direct et mises à jour instantanées pour les enchères et devis"

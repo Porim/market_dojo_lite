@@ -1,0 +1,107 @@
+de:
+  dashboard:
+    buyer:
+      welcome: "Willkommen zurück, %{name}!"
+      overview: "Hier ist Ihre Beschaffungsübersicht"
+      stats:
+        total_rfqs: "Gesamt-Anfragen"
+        active_rfqs: "Aktive Anfragen"
+        quotes_received: "Erhaltene Angebote"
+        live_auctions: "Live-Auktionen"
+      quick_actions:
+        create_rfq:
+          title: "Neue Anfrage erstellen"
+          description: "Eine neue Beschaffungsanfrage starten"
+        view_rfqs:
+          title: "Alle Anfragen anzeigen"
+          description: "Ihre Anfragen verwalten"
+        analytics:
+          title: "Analytik anzeigen"
+          description: "Ihre Leistung verfolgen"
+      sections:
+        recent_rfqs: "Kürzliche Anfragen"
+        active_auctions: "Aktive Auktionen"
+        view_all: "Alle anzeigen"
+      recent_rfqs:
+        quotes_due: "%{count} Angebote • Fällig am %{date}"
+        no_rfqs: "Noch keine Anfragen erstellt"
+        create_first: "Erstellen Sie Ihre erste Anfrage"
+      auctions:
+        current_price: "Aktueller Preis:"
+        time_left: "Verbleibende Zeit:"
+        live: "Live"
+        no_auctions: "Keine aktiven Auktionen"
+    
+    supplier:
+      welcome: "Willkommen zurück, %{name}!"
+      overview: "Hier ist Ihre Lieferantenübersicht"
+      stats:
+        open_rfqs: "Offene Anfragen"
+        quotes_submitted: "Eingereichte Angebote"
+        won_quotes: "Gewonnene Angebote"
+        live_auctions: "Live-Auktionen"
+      quick_actions:
+        browse_rfqs:
+          title: "Anfragen durchsuchen"
+          description: "Neue Möglichkeiten finden"
+        live_auctions:
+          title: "Live-Auktionen"
+          description: "An aktiven Geboten teilnehmen"
+        reports:
+          title: "Leistungsberichte"
+          description: "Ihren Erfolg verfolgen"
+      sections:
+        new_opportunities: "Neue Möglichkeiten"
+        my_recent_quotes: "Meine kürzlichen Angebote"
+        live_auctions: "Live-Auktionen"
+        view_all: "Alle anzeigen"
+      opportunities:
+        new: "Neu"
+        quoted: "Angebot abgegeben"
+        due: "Fällig am %{date}"
+        submit_quote: "Angebot abgeben"
+        no_active_rfqs: "Keine aktiven Anfragen verfügbar"
+      quotes:
+        pending: "Ausstehend"
+        no_quotes: "Noch keine Angebote eingereicht"
+      auctions:
+        current_price: "Aktueller Preis:"
+        time_left: "Verbleibende Zeit:"
+        live: "Live"
+        join_auction: "An Auktion teilnehmen"
+        no_auctions: "Derzeit keine aktiven Auktionen"
+    
+    landing:
+      hero:
+        title: "Willkommen bei Market Dojo Lite"
+        subtitle: "Die vereinfachte eProcurement-Plattform, die Käufer mit Lieferanten verbindet, RFQ-Prozesse rationalisiert und wettbewerbsfähige Rückwärtsauktionen ermöglicht."
+      buyers:
+        title: "Für Käufer"
+        features:
+          rfq_management: "Anfragen effizient erstellen und verwalten"
+          reverse_auctions: "Wettbewerbsfähige Rückwärtsauktionen durchführen"
+          quote_comparison: "Angebote nebeneinander vergleichen"
+          analytics: "Einsparungen und Analytik verfolgen"
+        sign_up: "Als Käufer registrieren"
+      suppliers:
+        title: "Für Lieferanten"
+        features:
+          opportunities: "Zugang zu neuen Geschäftsmöglichkeiten"
+          quotes: "Wettbewerbsfähige Angebote abgeben"
+          auctions: "An Echtzeitauktionen teilnehmen"
+          metrics: "Leistungskennzahlen verfolgen"
+        sign_up: "Als Lieferant registrieren"
+      login:
+        already_account: "Haben Sie bereits ein Konto?"
+        sign_in: "Anmelden"
+      features:
+        title: "Plattform-Funktionen"
+        easy_to_use:
+          title: "Einfach zu bedienen"
+          description: "Intuitive Oberfläche für schnelle Einführung und minimale Schulung"
+        secure:
+          title: "Sicher & Zuverlässig"
+          description: "Unternehmenssicherheit mit zuverlässiger Cloud-Infrastruktur"
+        real_time:
+          title: "Echtzeit-Updates"
+          description: "Live-Benachrichtigungen und sofortige Updates für Auktionen und Angebote"

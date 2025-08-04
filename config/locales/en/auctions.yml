@@ -1,0 +1,33 @@
+en:
+  auctions:
+    index:
+      title: "All Auctions"
+      by: "By"
+      current_price: "Current Price"
+      bids: "Bids"
+      ends_in: "Ends in"
+      status: "Status"
+      view_auction: "View Auction"
+      no_auctions: "No auctions available at the moment."
+      
+    show:
+      title: "Auction"
+      current_lowest_price: "Current Lowest Price"
+      time_remaining: "Time Remaining"
+      status: "Status"
+      ended: "Ended"
+      place_your_bid: "Place Your Bid"
+      bid_amount: "Bid Amount (£)"
+      bid_placeholder: "Must be lower than current price"
+      place_bid: "Place Bid"
+      bid_history: "Bid History"
+      leading: "Leading"
+      no_bids: "No bids placed yet."
+      no_auction: "No auction has been created for this RFQ yet."
+      back_to_rfq: "Back to RFQ"
+      ends: "Ends"
+      
+      table:
+        supplier: "Supplier"
+        bid_amount: "Bid Amount"
+        time: "Time"

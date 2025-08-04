@@ -1,0 +1,107 @@
+en:
+  dashboard:
+    buyer:
+      welcome: "Welcome back, %{name}!"
+      overview: "Here's your procurement overview"
+      stats:
+        total_rfqs: "Total RFQs"
+        active_rfqs: "Active RFQs"
+        quotes_received: "Quotes Received"
+        live_auctions: "Live Auctions"
+      quick_actions:
+        create_rfq:
+          title: "Create New RFQ"
+          description: "Start a new procurement request"
+        view_rfqs:
+          title: "View All RFQs"
+          description: "Manage your requests"
+        analytics:
+          title: "View Analytics"
+          description: "Track your performance"
+      sections:
+        recent_rfqs: "Recent RFQs"
+        active_auctions: "Active Auctions"
+        view_all: "View All"
+      recent_rfqs:
+        quotes_due: "%{count} quotes • Due %{date}"
+        no_rfqs: "No RFQs created yet"
+        create_first: "Create your first RFQ"
+      auctions:
+        current_price: "Current Price:"
+        time_left: "Time Left:"
+        live: "Live"
+        no_auctions: "No active auctions"
+    
+    supplier:
+      welcome: "Welcome back, %{name}!"
+      overview: "Here's your supplier overview"
+      stats:
+        open_rfqs: "Open RFQs"
+        quotes_submitted: "Quotes Submitted"
+        won_quotes: "Won Quotes"
+        live_auctions: "Live Auctions"
+      quick_actions:
+        browse_rfqs:
+          title: "Browse RFQs"
+          description: "Find new opportunities"
+        live_auctions:
+          title: "Live Auctions"
+          description: "Join active bidding"
+        reports:
+          title: "Performance Reports"
+          description: "Track your success"
+      sections:
+        new_opportunities: "New Opportunities"
+        my_recent_quotes: "My Recent Quotes"
+        live_auctions: "Live Auctions"
+        view_all: "View All"
+      opportunities:
+        new: "New"
+        quoted: "Quoted"
+        due: "Due %{date}"
+        submit_quote: "Submit Quote"
+        no_active_rfqs: "No active RFQs available"
+      quotes:
+        pending: "Pending"
+        no_quotes: "No quotes submitted yet"
+      auctions:
+        current_price: "Current Price:"
+        time_left: "Time Left:"
+        live: "Live"
+        join_auction: "Join Auction"
+        no_auctions: "No active auctions at the moment"
+    
+    landing:
+      hero:
+        title: "Welcome to Market Dojo Lite"
+        subtitle: "The simplified eProcurement platform that connects buyers with suppliers, streamlines RFQ processes, and enables competitive reverse auctions."
+      buyers:
+        title: "For Buyers"
+        features:
+          rfq_management: "Create and manage RFQs efficiently"
+          reverse_auctions: "Run competitive reverse auctions"
+          quote_comparison: "Compare quotes side-by-side"
+          analytics: "Track savings and analytics"
+        sign_up: "Sign Up as Buyer"
+      suppliers:
+        title: "For Suppliers"
+        features:
+          opportunities: "Access new business opportunities"
+          quotes: "Submit competitive quotes"
+          auctions: "Participate in real-time auctions"
+          metrics: "Track performance metrics"
+        sign_up: "Sign Up as Supplier"
+      login:
+        already_account: "Already have an account?"
+        sign_in: "Sign In"
+      features:
+        title: "Platform Features"
+        easy_to_use:
+          title: "Easy to Use"
+          description: "Intuitive interface designed for quick adoption and minimal training"
+        secure:
+          title: "Secure & Reliable"
+          description: "Enterprise-grade security with reliable cloud infrastructure"
+        real_time:
+          title: "Real-time Updates"
+          description: "Live notifications and instant updates for auctions and quotes"

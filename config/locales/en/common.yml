@@ -35,6 +35,7 @@ en:
       pending: "Pending"
       accepted: "Accepted"
       rejected: "Rejected"
+      status: "Status"
       
     messages:
       confirm_delete: "Are you sure?"

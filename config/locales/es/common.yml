@@ -35,6 +35,7 @@ es:
       pending: "Pendiente"
       accepted: "Aceptado"
       rejected: "Rechazado"
+      status: "Estado"
       
     messages:
       confirm_delete: "¿Estás seguro?"

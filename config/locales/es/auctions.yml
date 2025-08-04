@@ -1,0 +1,33 @@
+es:
+  auctions:
+    index:
+      title: "Todas las Subastas"
+      by: "Por"
+      current_price: "Precio Actual"
+      bids: "Ofertas"
+      ends_in: "Termina en"
+      status: "Estado"
+      view_auction: "Ver Subasta"
+      no_auctions: "No hay subastas disponibles en este momento."
+      
+    show:
+      title: "Subasta"
+      current_lowest_price: "Precio Más Bajo Actual"
+      time_remaining: "Tiempo Restante"
+      status: "Estado"
+      ended: "Finalizada"
+      place_your_bid: "Hacer tu Oferta"
+      bid_amount: "Monto de la Oferta (£)"
+      bid_placeholder: "Debe ser menor que el precio actual"
+      place_bid: "Hacer Oferta"
+      bid_history: "Historial de Ofertas"
+      leading: "Liderando"
+      no_bids: "No se han hecho ofertas todavía."
+      no_auction: "Aún no se ha creado una subasta para esta solicitud."
+      back_to_rfq: "Volver a la Solicitud"
+      ends: "Termina"
+      
+      table:
+        supplier: "Proveedor"
+        bid_amount: "Monto de la Oferta"
+        time: "Hora"

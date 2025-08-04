@@ -6,6 +6,13 @@ es:
       your_rfqs: "Tus Solicitudes"
       available_rfqs: "Solicitudes Disponibles"
       no_rfqs: "No se encontraron solicitudes"
+      table:
+        title: "Título"
+        company: "Empresa"
+        status: "Estado"
+        deadline: "Fecha límite"
+        quotes: "Cotizaciones"
+        actions: "Acciones"
       
     show:
       by: "por"

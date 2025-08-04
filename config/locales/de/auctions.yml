@@ -1,0 +1,33 @@
+de:
+  auctions:
+    index:
+      title: "Alle Auktionen"
+      by: "Von"
+      current_price: "Aktueller Preis"
+      bids: "Gebote"
+      ends_in: "Endet in"
+      status: "Status"
+      view_auction: "Auktion anzeigen"
+      no_auctions: "Derzeit sind keine Auktionen verfügbar."
+      
+    show:
+      title: "Auktion"
+      current_lowest_price: "Aktuell niedrigster Preis"
+      time_remaining: "Verbleibende Zeit"
+      status: "Status"
+      ended: "Beendet"
+      place_your_bid: "Ihr Gebot abgeben"
+      bid_amount: "Gebotsbetrag (£)"
+      bid_placeholder: "Muss unter dem aktuellen Preis liegen"
+      place_bid: "Gebot abgeben"
+      bid_history: "Gebotsverlauf"
+      leading: "Führend"
+      no_bids: "Noch keine Gebote abgegeben."
+      no_auction: "Für diese Anfrage wurde noch keine Auktion erstellt."
+      back_to_rfq: "Zurück zur Anfrage"
+      ends: "Endet"
+      
+      table:
+        supplier: "Lieferant"
+        bid_amount: "Gebotsbetrag"
+        time: "Zeit"

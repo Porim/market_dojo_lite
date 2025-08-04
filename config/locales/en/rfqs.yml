@@ -6,6 +6,13 @@ en:
       your_rfqs: "Your RFQs"
       available_rfqs: "Available RFQs"
       no_rfqs: "No RFQs found"
+      table:
+        title: "Title"
+        company: "Company"
+        status: "Status"
+        deadline: "Deadline"
+        quotes: "Quotes"
+        actions: "Actions"
       
     show:
       by: "by"

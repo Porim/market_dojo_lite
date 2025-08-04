@@ -45,30 +45,54 @@ class ReportsController < ApplicationController
   end
 
   def supplier_performance
-    @suppliers = User.suppliers.joins(quotes: :rfq)
+    # Get suppliers with their metrics including win rates in a single query
+    supplier_ids = User.suppliers.joins(quotes: :rfq)
+                       .where(rfqs: { user_id: current_user.id })
+                       .distinct
+                       .pluck(:id)
+
+    # Base supplier data with counts
+    @suppliers = User.where(id: supplier_ids)
+                     .joins(quotes: :rfq)
                      .where(rfqs: { user_id: current_user.id })
                      .group("users.id")
-                     .select('users.*,
+                     .select('users.id, users.email, users.name, users.company_name, users.phone, users.role, users.created_at, users.updated_at,
                              COUNT(DISTINCT quotes.id) as total_quotes,
                              AVG(quotes.price) as avg_price,
                              COUNT(DISTINCT rfqs.id) as rfqs_participated')
                      .to_a
 
+    # Calculate win rates efficiently with a single query
+    win_rate_data = Quote.joins(:rfq, :user)
+                         .where(rfqs: { user_id: current_user.id })
+                         .where(users: { id: supplier_ids })
+                         .group("users.id, users.company_name")
+                         .pluck(
+                           Arel.sql("users.id"),
+                           Arel.sql("users.company_name"),
+                           Arel.sql("COUNT(DISTINCT quotes.id)"),
+                           Arel.sql("COUNT(DISTINCT CASE WHEN rfqs.status = 'closed' AND quotes.price = (SELECT MIN(q2.price) FROM quotes q2 WHERE q2.rfq_id = rfqs.id) THEN quotes.id END)")
+                         )
+
+    @win_rates = {}
+    win_rate_data.each do |supplier_id, company_name, total_quotes, winning_quotes|
+      @win_rates[company_name] = total_quotes > 0 ? (winning_quotes.to_f / total_quotes * 100).round(2) : 0
+    end
+
     # Response time analysis
     if ActiveRecord::Base.connection.adapter_name == "SQLite"
       @response_times = Quote.joins(:rfq, :user)
                              .where(rfqs: { user_id: current_user.id })
+                             .where(users: { id: supplier_ids })
                              .group("users.company_name")
                              .average("(julianday(quotes.created_at) - julianday(rfqs.created_at)) * 24")
     else
       @response_times = Quote.joins(:rfq, :user)
                              .where(rfqs: { user_id: current_user.id })
+                             .where(users: { id: supplier_ids })
                              .group("users.company_name")
                              .average("ROUND(EXTRACT(EPOCH FROM (quotes.created_at - rfqs.created_at))/3600, 2)")
     end
-
-    # Win rate by supplier
-    @win_rates = calculate_supplier_win_rates
   end
 
   def rfq_analytics
@@ -149,17 +173,22 @@ class ReportsController < ApplicationController
     savings.sort_by { |s| -s[:savings_amount] }
   end
 
+  # This method is no longer needed as win rates are calculated in supplier_performance
+  # Kept for backwards compatibility if called elsewhere
   def calculate_supplier_win_rates
+    win_rate_data = Quote.joins(:rfq, :user)
+                         .where(rfqs: { user_id: current_user.id })
+                         .where(users: { role: "supplier" })
+                         .group("users.company_name")
+                         .pluck(
+                           Arel.sql("users.company_name"),
+                           Arel.sql("COUNT(DISTINCT quotes.id)"),
+                           Arel.sql("COUNT(DISTINCT CASE WHEN rfqs.status = 'closed' AND quotes.price = (SELECT MIN(q2.price) FROM quotes q2 WHERE q2.rfq_id = rfqs.id) THEN quotes.id END)")
+                         )
+
     win_rates = {}
-
-    User.suppliers.each do |supplier|
-      total_quotes = supplier.quotes.joins(:rfq).where(rfqs: { user_id: current_user.id }).count
-      winning_quotes = supplier.quotes.joins(:rfq)
-                              .where(rfqs: { user_id: current_user.id, status: "closed" })
-                              .where("quotes.price = (SELECT MIN(price) FROM quotes q2 WHERE q2.rfq_id = rfqs.id)")
-                              .count
-
-      win_rates[supplier.company_name] = total_quotes > 0 ? (winning_quotes.to_f / total_quotes * 100).round(2) : 0
+    win_rate_data.each do |company_name, total_quotes, winning_quotes|
+      win_rates[company_name] = total_quotes > 0 ? (winning_quotes.to_f / total_quotes * 100).round(2) : 0
     end
 
     win_rates.sort_by { |_, rate| -rate }.to_h

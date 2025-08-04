@@ -1,0 +1,54 @@
+fr:
+  rfqs:
+    index:
+      title: "Demandes de Devis"
+      new_rfq: "Nouvelle Demande"
+      your_rfqs: "Vos Demandes"
+      available_rfqs: "Demandes Disponibles"
+      no_rfqs: "Aucune demande trouvée"
+      table:
+        title: "Titre"
+        company: "Entreprise"
+        status: "Statut"
+        deadline: "Date limite"
+        quotes: "Devis"
+        actions: "Actions"
+      
+    show:
+      by: "par"
+      description: "Description"
+      deadline: "Date limite"
+      attachments: "Pièces jointes"
+      quotes: "Devis"
+      no_quotes: "Aucun devis soumis pour le moment."
+      submit_quote: "Soumettre un Devis"
+      start_auction: "Démarrer l'Enchère"
+      active_auction: "Enchère Active"
+      current_price: "Prix Actuel"
+      time_remaining: "Temps Restant"
+      view_auction: "Voir l'Enchère"
+      
+    new:
+      title: "Créer une Nouvelle Demande"
+      
+    edit:
+      title: "Modifier la Demande"
+      current_attachments: "Pièces jointes actuelles"
+      add_attachments: "Ajouter plus de pièces jointes"
+      
+    form:
+      title_label: "Titre"
+      description_label: "Description"
+      deadline_label: "Date limite"
+      status_label: "Statut"
+      attachments_label: "Pièces jointes"
+      upload_files: "Télécharger des fichiers"
+      drag_drop: "ou glisser-déposer"
+      file_types: "PDF, DOC, DOCX, XLS, XLSX jusqu'à 10Mo chacun"
+      selected_files: "Fichiers sélectionnés :"
+      
+    messages:
+      created: "La demande a été créée avec succès."
+      updated: "La demande a été mise à jour avec succès."
+      destroyed: "La demande a été supprimée avec succès."
+      access_denied: "Accès refusé. Seuls les acheteurs peuvent effectuer cette action."
