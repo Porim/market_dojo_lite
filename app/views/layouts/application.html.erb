@@ -60,11 +60,11 @@
           
           <!-- Tablet Menu (medium screens) -->
           <div class="hidden md:flex lg:hidden items-center space-x-2">
-            <select onchange="switchLanguage(this.value)" class="text-xs border-gray-300 rounded-md">
-              <option value="en" <%= 'selected' if I18n.locale == :en %>>EN</option>
-              <option value="es" <%= 'selected' if I18n.locale == :es %>>ES</option>
-              <option value="fr" <%= 'selected' if I18n.locale == :fr %>>FR</option>
-              <option value="de" <%= 'selected' if I18n.locale == :de %>>DE</option>
+            <select onchange="switchLanguage(this.value)" class="text-xs border-gray-300 rounded-md px-2 py-1">
+              <option value="en" <%= 'selected' if I18n.locale == :en %>>🇬🇧</option>
+              <option value="es" <%= 'selected' if I18n.locale == :es %>>🇪🇸</option>
+              <option value="fr" <%= 'selected' if I18n.locale == :fr %>>🇫🇷</option>
+              <option value="de" <%= 'selected' if I18n.locale == :de %>>🇩🇪</option>
             </select>
             <% if user_signed_in? %>
               <%= button_to t('navigation.logout'), destroy_user_session_path, method: :delete, class: "text-xs text-gray-500 hover:text-gray-900" %>
@@ -76,11 +76,11 @@
           <!-- Desktop Menu -->
           <div class="hidden lg:flex items-center space-x-3">
             <!-- Language Switcher -->
-            <select onchange="switchLanguage(this.value)" class="text-xs border-gray-300 rounded-md">
-              <option value="en" <%= 'selected' if I18n.locale == :en %>>EN</option>
-              <option value="es" <%= 'selected' if I18n.locale == :es %>>ES</option>
-              <option value="fr" <%= 'selected' if I18n.locale == :fr %>>FR</option>
-              <option value="de" <%= 'selected' if I18n.locale == :de %>>DE</option>
+            <select onchange="switchLanguage(this.value)" class="text-xs border-gray-300 rounded-md px-2 py-1">
+              <option value="en" <%= 'selected' if I18n.locale == :en %>>🇬🇧</option>
+              <option value="es" <%= 'selected' if I18n.locale == :es %>>🇪🇸</option>
+              <option value="fr" <%= 'selected' if I18n.locale == :fr %>>🇫🇷</option>
+              <option value="de" <%= 'selected' if I18n.locale == :de %>>🇩🇪</option>
             </select>
             
             <% if user_signed_in? %>
@@ -130,10 +130,10 @@
           <div class="px-4 space-y-3">
             <!-- Language Switcher -->
             <select onchange="switchLanguage(this.value)" class="w-full text-sm border-gray-300 rounded-md">
-              <option value="en" <%= 'selected' if I18n.locale == :en %>>English</option>
-              <option value="es" <%= 'selected' if I18n.locale == :es %>>Español</option>
-              <option value="fr" <%= 'selected' if I18n.locale == :fr %>>Français</option>
-              <option value="de" <%= 'selected' if I18n.locale == :de %>>Deutsch</option>
+              <option value="en" <%= 'selected' if I18n.locale == :en %>>🇬🇧 English</option>
+              <option value="es" <%= 'selected' if I18n.locale == :es %>>🇪🇸 Español</option>
+              <option value="fr" <%= 'selected' if I18n.locale == :fr %>>🇫🇷 Français</option>
+              <option value="de" <%= 'selected' if I18n.locale == :de %>>🇩🇪 Deutsch</option>
             </select>
             
             <% if user_signed_in? %>
