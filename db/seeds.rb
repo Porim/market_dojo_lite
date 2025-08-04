@@ -254,8 +254,15 @@ puts "  - Second auction created (bids disabled in production seed)"
 
 puts "✓ Created auctions with bids"
 
-# Create 20 active auctions ending between 24 hours and few months
-puts "\nCreating 20 active auctions with varied end times..."
+# Skip new auction creation in production to avoid ActionCable issues
+if Rails.env.development?
+  # Create 20 active auctions ending between 24 hours and few months
+  puts "\nCreating 20 active auctions with varied end times..."
+else
+  puts "\n⚠️  Skipping advanced auction creation in production (ActionCable not available in Cloud Run jobs)"
+end
+
+if Rails.env.development?
 auction_count = 0
 
 # Auctions ending in next 24-48 hours
@@ -455,6 +462,8 @@ completed_auction_count = 0
 end
 
 puts "✓ Created #{completed_auction_count} completed auctions with #{Bid.where(auction: Auction.completed).count} total bids"
+
+end # end of development-only auction creation
 
 # Create RFQs with specific patterns for analytics
 puts "\nCreating RFQs for analytics patterns..."
