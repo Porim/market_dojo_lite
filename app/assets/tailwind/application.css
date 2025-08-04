@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Dark mode configuration */
+@layer base {
+  :root {
+    color-scheme: light dark;
+  }
+}
+
 /* Form input styling */
 @layer components {
   /* Style all text inputs, email inputs, password inputs, textareas, and selects */
@@ -12,7 +19,7 @@
   input[type="url"],
   textarea,
   select {
-    @apply block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-white px-3 py-2 text-gray-900 placeholder-gray-400 border;
+    @apply block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-white dark:bg-gray-800 px-3 py-2 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 border;
   }
 
   /* Style checkboxes and radio buttons */
@@ -23,7 +30,7 @@
 
   /* Style labels */
   label {
-    @apply block text-sm font-medium text-gray-700 mb-1;
+    @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1;
   }
 
   /* Style form fields wrapper */
