@@ -53,7 +53,7 @@
         <%= link_to "Edit", edit_rfq_path(@rfq), class: "px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" %>
         <% if @rfq.status == 'published' && @rfq.auction.nil? %>
           <%= button_to "Start Auction", rfq_auction_path(@rfq), method: :post, 
-              params: { auction: { start_time: Time.current, end_time: 5.minutes.from_now, current_price: @quotes.first&.price } },
+              params: { auction: { start_time: Time.current, end_time: @rfq.deadline, current_price: @quotes.first&.price } },
               class: "px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700" %>
         <% end %>
       </div>
