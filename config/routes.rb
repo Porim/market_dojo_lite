@@ -54,6 +54,11 @@ Rails.application.routes.draw do
   # API Documentation
   get "api_docs", to: "api_docs#index", as: :api_docs
 
+  # API Token Management (for web interface)
+  resource :api_tokens, only: [] do
+    post :regenerate
+  end
+
   # Sentry test endpoint (only for testing)
   get "sentry_test", to: "sentry_test#trigger_error" if Rails.env.development? || Rails.env.production?
 

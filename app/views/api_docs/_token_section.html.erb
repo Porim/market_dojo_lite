@@ -1,0 +1,24 @@
+<div id="api_token_section">
+  <h2 class="text-xl font-semibold mb-4">Your API Token</h2>
+  <% if user.api_token.present? %>
+    <div class="bg-gray-50 p-4 rounded-md">
+      <p class="text-sm text-gray-600 mb-2">Use this token in the Authorization header for all API requests:</p>
+      <code class="block bg-gray-800 text-green-400 p-3 rounded text-sm">
+        Authorization: Bearer <%= user.api_token %>
+      </code>
+    </div>
+    <div class="mt-4">
+      <%= button_to "Regenerate Token", regenerate_api_tokens_path, 
+          method: :post,
+          class: "px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700",
+          data: { turbo_confirm: "Are you sure? This will invalidate your current token." } %>
+    </div>
+  <% else %>
+    <div class="bg-yellow-50 p-4 rounded-md">
+      <p class="text-sm text-yellow-800 mb-3">You haven't generated an API token yet. Click below to create one:</p>
+      <%= button_to "Generate API Token", regenerate_api_tokens_path, 
+          method: :post,
+          class: "px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" %>
+    </div>
+  <% end %>
+</div>
