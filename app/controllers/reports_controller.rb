@@ -64,7 +64,7 @@ class ReportsController < ApplicationController
       @response_times = Quote.joins(:rfq, :user)
                              .where(rfqs: { user_id: current_user.id })
                              .group("users.company_name")
-                             .average("EXTRACT(EPOCH FROM (quotes.created_at - rfqs.created_at))/3600")
+                             .average("ROUND(EXTRACT(EPOCH FROM (quotes.created_at - rfqs.created_at))/3600, 2)")
     end
 
     # Win rate by supplier
