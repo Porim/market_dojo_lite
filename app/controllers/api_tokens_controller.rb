@@ -12,6 +12,9 @@ class ApiTokensController < ApplicationController
           locals: { user: current_user }
         )
       end
+      format.html do
+        redirect_to api_docs_path, notice: "API token regenerated successfully"
+      end
       format.json do
         render json: {
           message: "API token regenerated successfully",
